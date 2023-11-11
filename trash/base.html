@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Website{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Мій сайт</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Домашня сторінка</a></li>
+                <li><a href="/about/">Про нас</a></li>
+                <!-- Додайте інші посилання на сторінки тут -->
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        &copy; 2023 Мій сайт
+    </footer>
+</body>
+</html>

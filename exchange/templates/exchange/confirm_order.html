@@ -1,0 +1,65 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles_confirm_order.css' %}">
+
+
+
+<div class="container">
+    <h2>Order Details</h2>
+    <div class="details">
+        <p>Email: {{ order.email }}</p>
+        <p>Crypto from: {{ order.crypto_from }}</p>
+        <p>Amount: {{ order.amount }}</p>
+        <p>Recipient Wallet: {{ order.recipient_wallet }}</p>
+        <p>Crypto to: {{ order.crypto_to }}</p>
+        <p>Site wallet: {{ order.site_wallet }}</p>
+    </div>
+
+    <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" id="processOrderButton">Підтвердити оплату</button>
+    </form>
+
+    <div id="orderStatusMessage"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var orderId = "{{ order.id }}";
+
+        $("#paymentConfirmationForm").submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // Серіалізує дані форми
+                success: function(data) {
+                    $('#orderStatusMessage').text(data.message).show();
+                }
+            });
+        });
+
+        function pollOrderStatus() {
+            $.ajax({
+                url: `/check_order_status/${orderId}/`,
+                success: function(response) {
+                    if(response.is_processed) {
+                        $('#orderStatusMessage').text('Замовлення було оброблено.').show();
+                        clearInterval(pollInterval); // Зупиняємо опитування
+                    }
+                },
+                error: function() {
+                    console.log('Error while checking order status');
+                }
+            });
+        }
+
+        var pollInterval = setInterval(pollOrderStatus, 1000); // Опитування кожні 1 секунду
+    });
+</script>
+
+{% endblock %}
