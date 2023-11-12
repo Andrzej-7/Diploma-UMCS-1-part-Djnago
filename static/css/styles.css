@@ -1,15 +1,19 @@
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #121212; /* Темний фон для всього тіла */
+    color: #e0e0e0; /* Світлий колір тексту */
+    margin: 0;
+    padding: 0;
 }
 
 h2 {
     text-align: center;
+    color: #fff;
 }
 
 header {
-    background-color: #333;
+    background-color: #1c1c1c; /* Ще темніший фон для заголовка */
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -19,38 +23,62 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    background-color: #222; /* Темний фон для навігації */
 }
 
 nav li {
     display: inline;
     margin-right: 20px;
+    color: #fff; /* Білий текст для пунктів меню */
 }
 
 main {
-    background-color: #fff;
+    background-color: #282828; /* Темний фон для основного контенту */
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #3d3d3d; /* Контур для основного контенту */
     border-radius: 5px;
+    color: #e0e0e0; /* Світлий колір тексту */
 }
 
 form {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #333; /* Темний фон для форм */
+    border: 1px solid #444; /* Контур для форм */
     border-radius: 5px;
 }
 
+input[type="text"], input[type="email"], select, textarea {
+    background-color: #444; /* Темний фон для полів вводу */
+    color: #e0e0e0; /* Світлий колір тексту */
+    border: 1px solid #555; /* Контур для полів вводу */
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+}
+
+input, select, textarea {
+    background-color: #444; /* Темний фон для полів вводу */
+    color: #e0e0e0; /* Світлий колір тексту */
+    border: 1px solid #555; /* Контур для полів вводу */
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
 button {
-    background-color: #007BFF;
+    background-color: #007BFF; /* Колір фону кнопки */
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Колір фону кнопки при наведенні */
 }
