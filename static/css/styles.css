@@ -5,6 +5,8 @@ body {
     color: #e0e0e0; /* Світлий колір тексту */
     margin: 0;
     padding: 0;
+    text-align: left;
+    
 }
 
 h2 {
@@ -33,21 +35,26 @@ nav li {
 }
 
 main {
-    background-color: #282828; /* Темний фон для основного контенту */
+    max-width: 800px; /* Або інша ширина за вашим вибором */
+    margin-left: auto;
+    margin-right: 0;
     padding: 20px;
+    background-color: #282828; /* Темний фон для основного контенту */
     border: 1px solid #3d3d3d; /* Контур для основного контенту */
     border-radius: 5px;
     color: #e0e0e0; /* Світлий колір тексту */
 }
 
+
 form {
     max-width: 400px;
-    margin: 0 auto;
+    margin-left: auto; 
+    margin-right: 40px; 
     padding: 20px;
-    background-color: #333; /* Темний фон для форм */
-    border: 1px solid #444; /* Контур для форм */
-    border-radius: 5px;
+    background-color: #333; 
+    border: 1px solid #444;
 }
+
 
 input[type="text"], input[type="email"], select, textarea {
     background-color: #444; /* Темний фон для полів вводу */
