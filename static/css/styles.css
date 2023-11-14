@@ -1,8 +1,8 @@
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #121212; /* Темний фон для всього тіла */
-    color: #e0e0e0; /* Світлий колір тексту */
+    background-color: #121212; 
+    color: #e0e0e0; 
     margin: 0;
     padding: 0;
     text-align: left;
@@ -15,7 +15,7 @@ h2 {
 }
 
 header {
-    background-color: #1c1c1c; /* Ще темніший фон для заголовка */
+    background-color: #1c1c1c; 
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -25,31 +25,32 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #222; /* Темний фон для навігації */
+    background-color: #222; 
 }
 
 nav li {
     display: inline;
     margin-right: 20px;
-    color: #fff; /* Білий текст для пунктів меню */
+    color: #fff; 
 }
 
 main {
-    max-width: 800px; /* Або інша ширина за вашим вибором */
+    max-width: 800px; 
     margin-left: auto;
     margin-right: 0;
     padding: 20px;
-    background-color: #282828; /* Темний фон для основного контенту */
-    border: 1px solid #3d3d3d; /* Контур для основного контенту */
+    background-color: #282828; 
+    border: 1px solid #3d3d3d; 
     border-radius: 5px;
-    color: #e0e0e0; /* Світлий колір тексту */
+    color: #e0e0e0; 
 }
 
 
 form {
     max-width: 400px;
     margin-left: auto; 
-    margin-right: 40px; 
+    margin-right: 40px;
+    margin-top: 60px; 
     padding: 20px;
     background-color: #333; 
     border: 1px solid #444;
@@ -57,18 +58,17 @@ form {
 
 
 input[type="text"], input[type="email"], select, textarea {
-    background-color: #444; /* Темний фон для полів вводу */
-    color: #e0e0e0; /* Світлий колір тексту */
-    border: 1px solid #555; /* Контур для полів вводу */
+    background-color: #444; 
+    color: #e0e0e0; 
+    border: 1px solid #555; 
     padding: 10px;
     margin: 8px 0;
     border-radius: 4px;
 }
 
 input, select, textarea {
-    background-color: #444; /* Темний фон для полів вводу */
-    color: #e0e0e0; /* Світлий колір тексту */
-    border: 1px solid #555; /* Контур для полів вводу */
+    color: #e0e0e0; 
+    border: 1px solid #555; 
     padding: 10px;
     margin: 8px 0;
     border-radius: 4px;
@@ -77,7 +77,7 @@ input, select, textarea {
 }
 
 button {
-    background-color: #007BFF; /* Колір фону кнопки */
+    background-color: #007BFF;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -87,5 +87,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Колір фону кнопки при наведенні */
+    background-color: #0056b3; 
 }

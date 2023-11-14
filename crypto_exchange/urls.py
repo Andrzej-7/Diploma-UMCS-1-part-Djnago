@@ -15,6 +15,6 @@ urlpatterns = [
     path('mark_as_processed/<int:order_id>/', mark_order_as_processed, name='mark_as_processed'),
     path('mark_as_paid/<int:order_id>/', views.mark_order_as_paid, name='mark_as_paid'),
     path('check_order_status/<int:order_id>/', views.check_order_status, name='check_order_status'),
-
+    path('convert_currency/', views.convert_currency, name='convert_currency'),
     
 ]

@@ -4,10 +4,31 @@
 {% block content %}
     <h2 id="first">Create Exchange Order</h2>
     <div class="form-container">
-        <form method="post">
+        <form method="post" id="cryptoConverterForm">
             {% csrf_token %}
             {{ form.as_p }}
+            <label for="you_get">You receive:</label> 
+            <input type="text" id="you_get" readonly > 
             <button type="submit">Confirm</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateConversion() {
+                var amount = document.querySelector('input[name="amount"]').value;
+                var from_currency = document.querySelector('select[name="crypto_from"]').value;
+                var to_currency = document.querySelector('select[name="crypto_to"]').value;
+
+                fetch(`/convert_currency?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('you_get').value = data.converted_amount.toFixed(4);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            document.getElementById('cryptoConverterForm').addEventListener('input', updateConversion);
+        });
+    </script>
 {% endblock %}

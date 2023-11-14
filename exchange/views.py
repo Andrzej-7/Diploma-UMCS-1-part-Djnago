@@ -1,5 +1,6 @@
 # exchange/views.py
 
+import requests
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import redirect, render
@@ -84,3 +85,45 @@ def mark_order_as_paid(request, order_id):
 def check_order_status(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     return JsonResponse({'is_processed': order.is_processed})
+
+
+
+
+def get_conversion_rate(from_currency, to_currency, api_key):
+    url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
+    headers = {
+        'X-CMC_PRO_API_KEY': api_key,
+        'Accepts': 'application/json'
+    }
+    parameters = {
+        'symbol': ','.join([from_currency, to_currency]),
+        'convert': 'USD'  # Використовуємо USD як проміжну валюту для конвертації
+    }
+
+    response = requests.get(url, headers=headers, params=parameters)
+    data = response.json()
+
+    from_price = data['data'][from_currency]['quote']['USD']['price']
+    to_price = data['data'][to_currency]['quote']['USD']['price']
+
+    rate = from_price / to_price
+    return rate
+
+def convert_crypto(amount, from_currency, to_currency, api_key):
+    rate = get_conversion_rate(from_currency, to_currency, api_key)
+    converted_amount = amount * rate
+    return converted_amount
+
+
+
+def convert_currency(request):
+    if request.method == "GET":
+        amount = float(request.GET.get('amount', 0))
+        from_currency = request.GET.get('from_currency', 'BTC')
+        to_currency = request.GET.get('to_currency', 'USDT')
+        api_key = '39a10038-46ef-40df-840f-87a402232775'  # Ваш API ключ
+
+        converted_amount = convert_crypto(amount, from_currency, to_currency, api_key)
+        return JsonResponse({'converted_amount': converted_amount})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
