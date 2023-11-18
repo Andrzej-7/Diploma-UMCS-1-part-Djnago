@@ -1,91 +1,139 @@
-/* styles.css */
-body {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    background-image: linear-gradient(to right, rgb(183, 164, 196), #a774da);
     font-family: Arial, sans-serif;
-    background-color: #121212; 
-    color: #e0e0e0; 
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    
 }
 
-h2 {
-    text-align: center;
-    color: #fff;
-}
 
-header {
-    background-color: #1c1c1c; 
-    color: #fff;
+
+.form-container {
+    width: 575px;
+    height: 880px;
+    margin: 20px auto;
     padding: 20px;
-    text-align: center;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #222; 
+.form-title {
+    width: 500px;
+    height: 90px;
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 800;
+    font-size: 38px;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 
-nav li {
-    display: inline;
-    margin-right: 20px;
-    color: #fff; 
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
 }
 
-main {
-    max-width: 800px; 
-    margin-left: auto;
-    margin-right: 0;
-    padding: 20px;
-    background-color: #282828; 
-    border: 1px solid #3d3d3d; 
-    border-radius: 5px;
-    color: #e0e0e0; 
-}
-
-
-form {
-    max-width: 400px;
-    margin-left: auto; 
-    margin-right: 40px;
-    margin-top: 60px; 
-    padding: 20px;
-    background-color: #333; 
-    border: 1px solid #444;
+input[type="text"], input[type="email"], select, textarea, #id_amount {
+    width: 500px;
+    height: 60px;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
 }
 
 
-input[type="text"], input[type="email"], select, textarea {
-    background-color: #444; 
-    color: #e0e0e0; 
-    border: 1px solid #555; 
-    padding: 10px;
-    margin: 8px 0;
+.agreement input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background-color: #fff;
+    border: 1px solid #000;
     border-radius: 4px;
+    position: relative;
+    margin-right: 10px;
 }
 
-input, select, textarea {
-    color: #e0e0e0; 
-    border: 1px solid #555; 
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 4px;
-    box-sizing: border-box;
+.agreement label {
+    position: relative;
+    top: 3px; /* вниз на 3px текс */
+}
+
+.agreement input[type="checkbox"]:checked {
+    background-color: #000;
+}
+
+.agreement input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    line-height: 1;
+}
+
+.agreement {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-agreement-link {
+    color: #a774da;
+    text-decoration: none;
+}
+
+.user-agreement-link:hover {
+    text-decoration: underline;
+}
+
+.agreement-warning {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+.hidden {
+    display: block;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 
 button {
-    background-color: #007BFF;
+    width: 343px;
+    height: 75px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #111111;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 button:hover {
-    background-color: #0056b3; 
+    background-color: #333;
 }

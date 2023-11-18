@@ -1,34 +1,109 @@
 {% load static %}
+<head>
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+</head>
 
 {% block content %}
-    <h2 id="first">Create Exchange Order</h2>
-    <div class="form-container">
-        <form method="post" id="cryptoConverterForm">
-            {% csrf_token %}
-            {{ form.as_p }}
+
+<body>
+    
+
+<div class="form-container">
+    <form method="post" id="cryptoConverterForm">
+        {% csrf_token %}
+
+        
+
+        <div class="form-title">Create Exchange Order</div>
+
+        <div class="form-field">
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" required>
+        </div>
+
+        <div class="form-field">
+            <label for="id_crypto_from">Crypto From:</label>
+            <select name="crypto_from" id="id_crypto_from">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="XMR">Monero (XMR)</option>
+                <option value="DAI">Dai (DAI)</option>
+                <!--  інші криптовалюти  -->
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="id_amount">Amount:</label>
+            <input type="number" name="amount" id="id_amount">
+        </div>
+
+        <div class="form-field">
+            <label for="id_crypto_to">Crypto To:</label>
+            <select name="crypto_to" id="id_crypto_to">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="XMR">Monero (XMR)</option>
+                <option value="DAI">Dai (DAI)</option>
+                <!--  інші криптовалюти  -->
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="id_recipient_wallet">Recipient Wallet:</label>
+            <input type="text" name="recipient_wallet" id="id_recipient_wallet">
+        </div>
+
+        <div class="form-field">
             <label for="you_get">You receive:</label> 
-            <input type="text" id="you_get" readonly > 
-            <button type="submit">Confirm</button>
-        </form>
-    </div>
+            <input type="text" id="you_get" readonly>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateConversion() {
-                var amount = document.querySelector('input[name="amount"]').value;
-                var from_currency = document.querySelector('select[name="crypto_from"]').value;
-                var to_currency = document.querySelector('select[name="crypto_to"]').value;
+        <div class="form-field agreement">
+            <input type="checkbox" id="agreementCheckbox" class="agreement-checkbox" name="agree">
+            <label for="agreementCheckbox"> Agree to <a href="/user-agreement" class="user-agreement-link">user agreement</a> service.</label>
+        </div>
+    
+        <div class="form-field button-container">
+            <button type="submit" id="submitBtn">Exchange now</button>
+            <p id="agreementWarning" class="agreement-warning hidden">Please confirm user agreement</p>
+        </div>
 
-                fetch(`/convert_currency?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('you_get').value = data.converted_amount.toFixed(4);
-                    })
-                    .catch(error => console.error('Error:', error));
+        <p id="agreementError" style="color: red; display: none;">Please confirm user agreement</p>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateConversion() {
+            var amount = document.querySelector('input[name="amount"]').value;
+            var from_currency = document.querySelector('select[name="crypto_from"]').value;
+            var to_currency = document.querySelector('select[name="crypto_to"]').value;
+
+            fetch(`/convert_currency?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('you_get').value = data.converted_amount.toFixed(4);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('cryptoConverterForm').addEventListener('input', updateConversion);
+
+        document.getElementById('cryptoConverterForm').addEventListener('submit', function(e) {
+            var checkbox = document.getElementById('agreementCheckbox');
+            var error = document.getElementById('agreementError');
+
+            if (!checkbox.checked) {
+                e.preventDefault(); // не відправити форму
+                error.style.display = 'block'; //Вивести повідомлення про помилку
+            } else {
+                error.style.display = 'none'; //не видавати помилку
             }
-
-            document.getElementById('cryptoConverterForm').addEventListener('input', updateConversion);
         });
-    </script>
+    });
+</script>
+</body>
 {% endblock %}

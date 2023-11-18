@@ -9,13 +9,14 @@ XMR = "XMR"
 DAI = "DAI"
 DASH = "DASH"
 Dogecoin = "Dogecoin"
-
+Bitcoin = "BTC"
 
 cryptoChoises = ((ETH, "eth"),
                 (XMR, "xmr"),
                 (DAI, "dai"),
                 (DASH, "dash"),
-                (Dogecoin, "dogecoin"),)
+                (Dogecoin, "dogecoin"),
+                (Bitcoin,"bitcoin"),)
 
 
 class Order(models.Model):
