@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% load static %}
 <head>
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
@@ -45,16 +46,19 @@
             {% csrf_token %}
 
             <div class="form-field">
+                {{ form.email.errors }}
                 {{ form.email }}
             </div>
 
 
             <div class="form-field">
+                {{ form.password1.errors }}
                 {{ form.password1 }}
             </div>
 
 
             <div class="form-field">
+                {{ form.password2.errors }}
                 {{ form.password2 }}
             </div>
 

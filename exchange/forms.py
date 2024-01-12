@@ -23,8 +23,9 @@ class OrderForm(forms.ModelForm):
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'E-mail'}))
-    password1 = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Password'}))
-    password2 = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Confirm your password'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm your password'}))
+    
 
     class Meta:
         model = User

@@ -5,6 +5,7 @@ from exchange import views
 from django.contrib import admin
 from exchange.views import mark_order_as_processed, confirm_order
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),  
     path('', views.create_order, name='create_exchange_order'),

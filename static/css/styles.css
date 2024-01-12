@@ -268,7 +268,7 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 .register-form-container input[type="email"] {
     font-size: 18px;
     width: 500px;
-    height: 80px;
+    height: 60px;
     padding: 12px;
     margin: 18px 0;
     border: 1px solid #ddd;

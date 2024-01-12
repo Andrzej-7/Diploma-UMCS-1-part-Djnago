@@ -1,5 +1,5 @@
 #views.py
-
+from django.contrib import messages
 import requests
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -136,8 +136,10 @@ def custom_register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            # Тут можна додати логіку, наприклад, перенаправлення або повідомлення
-            return redirect('home')
+            messages.success(request, 'Account created successfully')
+            return redirect('create_exchange_order')
+        else:
+            messages.error(request, form.errors)
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
