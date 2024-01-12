@@ -1,3 +1,5 @@
+#models.py 
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
@@ -29,6 +31,12 @@ class Order(models.Model):
     is_processed = models.BooleanField(default=False) 
     site_wallet = models.CharField(max_length=255, blank=True, null=True)
     you_get = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+
+class User(models.Model):
+    email = models.EmailField()
+    password = models.CharField(max_length=255)
+    
 
 
 

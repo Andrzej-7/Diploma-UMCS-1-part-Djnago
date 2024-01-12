@@ -17,7 +17,7 @@
 
     <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.id %}" method="post">
         {% csrf_token %}
-        <button type="submit" id="processOrderButton">Підтвердити оплату</button>
+        <button type="submit" id="processOrderButton">I payed</button>
     </form>
 
     <div id="orderStatusMessage"></div>

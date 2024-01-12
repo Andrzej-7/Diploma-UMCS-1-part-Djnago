@@ -1,4 +1,4 @@
-# exchange/views.py
+#views.py
 
 import requests
 from django.http import JsonResponse
@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from .forms import OrderForm
 from .models import Order
 from django.http import HttpResponse
+from .forms import UserRegisterForm, OrderForm
 
 
 wallets = {
@@ -46,7 +47,7 @@ def confirm_order(request, order_id):
         order.is_paid = True  # Встановіть, що замовлення оплачено
 
         crypto_from = order.crypto_from  # Отримайте вибір криптовалюти
-        order.site_wallet = wallets.get(crypto_from, 'адреса за замовчуванням')
+        order.site_wallet = wallets.get(crypto_from, 'example adress')
         order.save()  # Збережіть зміни
 
        
@@ -68,7 +69,7 @@ def mark_order_as_processed(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.is_processed = True
     order.save()
-    return JsonResponse({'message': f'Замовлення {order_id} було оброблено.'})
+    return JsonResponse({'message': f'Order {order_id} is processed.'})
 
 
 def check_order_status(request, order_id):
@@ -80,7 +81,7 @@ def mark_order_as_paid(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.is_paid = True
     order.save()
-    return JsonResponse({'message': 'Оплата підтверджена.'})
+    return JsonResponse({'message': 'Payment confirmed.'})
 
 def check_order_status(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
@@ -127,3 +128,16 @@ def convert_currency(request):
         return JsonResponse({'converted_amount': converted_amount})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+def custom_register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Тут можна додати логіку, наприклад, перенаправлення або повідомлення
+            return redirect('home')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration/register.html', {'form': form})

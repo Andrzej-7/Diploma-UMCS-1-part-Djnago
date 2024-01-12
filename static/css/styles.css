@@ -104,7 +104,8 @@ body, html {
     font-size: 16px;
 }
 
-input[type="text"], input[type="email"], select, textarea, #id_amount {
+
+input[type="text"], .main-form-container input[type="email"], select, textarea, #id_amount {
     width: 500px;
     height: 60px;
     padding: 12px;
@@ -198,3 +199,132 @@ input[type="text"], input[type="email"], select, textarea, #id_amount {
 #submitBtn:hover {
     background-color: #333;
 }
+
+
+
+/*-------------------------------- register page styles ------------------------ */
+
+
+
+
+.register-form-container {
+    width: 550px;
+    height: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(8, 8, 8, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.site-header-register {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.left-header {
+    flex: 1;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+}
+
+.right-header {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 35px;
+}
+
+.register-form-title {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 40px;
+}
+
+#login-button-register {
+    background-color: transparent;
+    color: #a936a7;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px; /* Збільшений розмір шрифту */
+    cursor: pointer;
+}
+
+#login-button-register:hover {
+    color: #a774da;
+    background-color: transparent;
+}
+
+
+
+
+
+.register-form-container input[type="email"] {
+    font-size: 18px;
+    width: 500px;
+    height: 80px;
+    padding: 12px;
+    margin: 18px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+.register-form-container input[type="password"] {
+    width: 500px;
+    height: 60px;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+.register-button-container {
+    text-align: center; 
+    width: 100%; 
+    padding: 20px 0; 
+}
+
+.register-button {
+    width: 343px;
+    height: 75px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #111111;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.register-form-container input::placeholder {
+    font-size: 16px; /* або будь-який інший розмір, який вам потрібен */
+    color: #888; /* Це також дозволяє змінити колір плейсхолдера */
+}
+
+.register-form-container input:focus {
+    outline: none; /* Видаляємо стандартну обводку браузера */
+    border: 2px solid #000; /* Застосовуємо чорну обводку */
+}
+
+
+
+
+
+
+
+
+
+
+
