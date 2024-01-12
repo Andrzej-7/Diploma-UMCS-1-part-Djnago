@@ -46,6 +46,12 @@
             {% csrf_token %}
 
             <div class="form-field">
+                {{ form.username.errors }}
+                {{ form.username }}
+            </div>
+
+
+            <div class="form-field">
                 {{ form.email.errors }}
                 {{ form.email }}
             </div>

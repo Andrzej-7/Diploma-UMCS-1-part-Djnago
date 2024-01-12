@@ -13,22 +13,32 @@
     <header class="site-header">
         <div class="Wrap">
             <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
-                <div class="wrap-buttons">
-                    <!--  logo for support button  -->
-                    <button id="support-button" onclick="location.href='/support'">
-                        <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
-                            <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1a1.993 1.993 0 0 0 1.722-1h.361a4.92 4.92 0 0 0 4.824-4H17a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3Z"/>
-                        </svg>
-                        Support
-                    </button>
-                    <!--  buttons  -->
+            <div class="wrap-buttons">
+                <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
+                    <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
+                </svg>
+                {% if user.is_authenticated %}
+                    <!-- Спадне меню -->
+                    <div class="dropdown">
+                        <button class="dropbtn">{{ user.email }}</button>
+                        <div class="dropdown-content">
+                            <a href="/my-orders">My Orders</a>
+                            <a href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
+                            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                            
+                        </div>
+                    </div>
+                {% else %}
                     <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
                     <button id="login-button" onclick="location.href='/login'">Log In</button>
-                </div>
+                {% endif %}
+            </div>
         </div>
     </header>
-    
+                    
 
 <div class="form-container main-form-container">
     <form method="post" id="cryptoConverterForm">
@@ -116,13 +126,20 @@
             var error = document.getElementById('agreementError');
 
             if (!checkbox.checked) {
-                e.preventDefault(); // не відправити форму
+                e.preventDefault(); //не відправити форму
                 error.style.display = 'block'; //Вивести повідомлення про помилку
             } else {
                 error.style.display = 'none'; //не видавати помилку
             }
         });
     });
+
+
+    function logout() {
+        document.getElementById('logout-form').submit();
+    }
+
+
 </script>
 </body>
 {% endblock %}

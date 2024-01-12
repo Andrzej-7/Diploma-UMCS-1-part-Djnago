@@ -209,7 +209,7 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 .register-form-container {
     width: 550px;
-    height: 600px;
+    height: 630px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -222,7 +222,8 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 
 
-.site-header-register {
+.site-header-register,
+.site-header-login {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -252,7 +253,7 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
     color: #a936a7;
     border: none;
     padding: 5px 10px;
-    font-size: 16px; /* Збільшений розмір шрифту */
+    font-size: 16px; 
     cursor: pointer;
 }
 
@@ -309,13 +310,13 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 
 .register-form-container input::placeholder {
-    font-size: 16px; /* або будь-який інший розмір, який вам потрібен */
-    color: #888; /* Це також дозволяє змінити колір плейсхолдера */
+    font-size: 16px; 
+    color: #888; 
 }
 
 .register-form-container input:focus {
-    outline: none; /* Видаляємо стандартну обводку браузера */
-    border: 2px solid #000; /* Застосовуємо чорну обводку */
+    outline: none;
+    border: 2px solid #000; 
 }
 
 
@@ -324,7 +325,112 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 
 
+/* -----------------------.dropdown ---------------*/
 
+
+
+
+
+
+
+
+.dropdown {
+    display: inline-flexbox;
+    margin-left: 15px; 
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn:hover {
+    color: #a774da;
+    background-color: transparent; 
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px; 
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    
+}
+
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #a774da;
+    border-radius: 8px;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+              /*------------------- login styles------------------------------ */
+
+
+.login-form-container {
+width: 550px;
+height: 465px;
+margin: 50px auto;
+padding: 20px;
+background-color: #fff;
+border-radius: 15px;
+box-shadow: 0 0 20px rgba(8, 8, 8, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+
+
+
+.login-form-container input[type="email"] {
+    font-size: 18px;
+    width: 500px;
+    height: 60px;
+    padding: 12px;
+    margin: 18px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+.login-form-container input[type="password"] {
+    font-size: 18px;
+    width: 500px;
+    height: 60px;
+    padding: 12px;
+    margin: 18px 0;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+
+
+.login-form-container input:focus {
+    outline: none;
+    border: 2px solid #000; 
+}
 
 
 

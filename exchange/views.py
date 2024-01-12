@@ -8,22 +8,20 @@ from .forms import OrderForm
 from .models import Order
 from django.http import HttpResponse
 from .forms import UserRegisterForm, OrderForm
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render
+from .forms import loginForm
 
 
 wallets = {
     'ETH': 'ETH3bf69a829c08f1ee28b0c013c937209a',
     'XMR': 'XMR1ddb778e2b24b6e065a112080869c5f3',
-    # Додайте інші варіанти криптовалют
+    #інші варіанти криптовалют
 }
 
 def home(request):
     return render(request, 'exchange/home.html')
 
-def custom_login(request):
-    return render(request, 'registration/login.html')
-
-def custom_register(request):
-    return render(request, 'registration/register.html')
 
 def create_order(request):
     if request.method == 'POST':
@@ -55,7 +53,7 @@ def confirm_order(request, order_id):
     return render(request, 'exchange/confirm_order.html', {'order': order})
 
 
-from django.shortcuts import render
+
 
 
 
@@ -137,9 +135,27 @@ def custom_register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully')
+            #для того щоб після реєстрації логінило одразу
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+
             return redirect('create_exchange_order')
         else:
             messages.error(request, form.errors)
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = loginForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = loginForm()
+
+    return render(request, 'registration/login.html', {'form': form})

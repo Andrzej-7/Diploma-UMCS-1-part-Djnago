@@ -27,8 +27,8 @@ def convert_crypto(amount, from_currency, to_currency, api_key):
     converted_amount = amount * rate
     return converted_amount
 
-# Приклад використання
-api_key = "39a10038-46ef-40df-840f-87a402232775" # Ваш API ключ
+
+api_key = "39a10038-46ef-40df-840f-87a402232775" #API 
 amount = 2 
 from_currency = "BTC" 
 to_currency = "USDT" 
