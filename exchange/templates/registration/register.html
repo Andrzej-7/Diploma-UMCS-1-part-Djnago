@@ -13,7 +13,9 @@
 
     <header class="site-header">
         <div class="Wrap">
-            <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
+                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            </a>            
                 <div class="wrap-buttons">
                     <!--  logo for support button  -->
                     <button id="support-button" onclick="location.href='/support'">
@@ -38,35 +40,47 @@
                 <div class="register-form-title">Sign up</div>
             </div>
             <div class="right-header">
-                <button id="login-button-register">Log In</button>
+                <button id="login-button-register" onclick="location.href='/login';">Log In</button>
             </div>
         </div>
         
         <form method="post">
             {% csrf_token %}
 
-            <div class="form-field">
-                {{ form.username.errors }}
-                {{ form.username }}
-            </div>
+
+        <div class="form-field">
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error-message">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+    
 
 
-            <div class="form-field">
-                {{ form.email.errors }}
-                {{ form.email }}
-            </div>
 
+        <div class="form-field">
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+    
 
-            <div class="form-field">
-                {{ form.password1.errors }}
-                {{ form.password1 }}
-            </div>
+        <div class="form-field">
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="error-message">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+    
 
-
-            <div class="form-field">
-                {{ form.password2.errors }}
-                {{ form.password2 }}
-            </div>
+        
+        <div class="form-field">
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="error-message">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
 
 
             <div class="register-button-container">
@@ -77,8 +91,6 @@
     
     
     
-
-
 
 </body>
 {% endblock %}

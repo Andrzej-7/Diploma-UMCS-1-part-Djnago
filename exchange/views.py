@@ -11,6 +11,11 @@ from .forms import UserRegisterForm, OrderForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from .forms import loginForm
+from django.contrib.auth.models import User
+
+
+
+
 
 
 wallets = {
@@ -134,8 +139,7 @@ def custom_register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account created successfully')
-            #для того щоб після реєстрації логінило одразу
+            # для того, щоб після реєстрації відразу авторизувати користувача
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -143,19 +147,33 @@ def custom_register(request):
 
             return redirect('create_exchange_order')
         else:
-            messages.error(request, form.errors)
+            # Використовуємо тег 'registration' для помилок реєстрації
+            messages.error(request, form.errors, extra_tags='registration')
     else:
         form = UserRegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
 
 
+
 def custom_login(request):
     if request.method == 'POST':
-        form = loginForm(request.POST)
+        form = loginForm(request.POST)  # Упевніться, що LoginForm вірно імпортована та визначена
         if form.is_valid():
-            pass
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('create_exchange_order')
+            else:
+                # Використовуємо тег 'login' для помилок входу
+                messages.error(request, "Invalid username or password.", extra_tags='login')
+        else:
+            messages.error(request, "Form data is not valid.", extra_tags='login')
     else:
         form = loginForm()
 
     return render(request, 'registration/login.html', {'form': form})
+

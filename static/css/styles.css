@@ -209,7 +209,8 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 .register-form-container {
     width: 550px;
-    height: 630px;
+    max-width: 100%;
+    /* height: 630px; */
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -218,9 +219,14 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
 }
 
-
+.site-title-link {
+    text-decoration: none; 
+    
+}
 
 .site-header-register,
 .site-header-login {
@@ -266,7 +272,8 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 
 
-.register-form-container input[type="email"] {
+.register-form-container input[type="email"],
+.register-form-container input[type="text"]{
     font-size: 18px;
     width: 500px;
     height: 60px;
@@ -323,6 +330,10 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 
 
+.error-message {
+    color: red;
+    margin-bottom: 5px; /* Додатковий відступ для помилок */
+}
 
 
 /* -----------------------.dropdown ---------------*/
@@ -405,18 +416,8 @@ align-items: center;
 
 
 
-
-.login-form-container input[type="email"] {
-    font-size: 18px;
-    width: 500px;
-    height: 60px;
-    padding: 12px;
-    margin: 18px 0;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-}
-
-.login-form-container input[type="password"] {
+.login-form-container input[type="password"],
+.login-form-container input[type="text"] {
     font-size: 18px;
     width: 500px;
     height: 60px;
@@ -431,6 +432,5 @@ align-items: center;
     outline: none;
     border: 2px solid #000; 
 }
-
 
 

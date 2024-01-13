@@ -19,5 +19,6 @@ urlpatterns = [
     path('check_order_status/<int:order_id>/', views.check_order_status, name='check_order_status'),
     path('convert_currency/', views.convert_currency, name='convert_currency'),
     path('logout/', auth_views.LogoutView.as_view(next_page='create_exchange_order'), name='logout'),
+    path('create_exchange_order/', views.create_order, name='create_exchange_order'),
 
 ]

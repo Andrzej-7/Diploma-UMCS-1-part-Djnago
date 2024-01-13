@@ -13,7 +13,9 @@
 
     <header class="site-header">
         <div class="Wrap">
-            <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
+                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            </a>            
                 <div class="wrap-buttons">
                     <!--  logo for support button  -->
                     <button id="support-button" onclick="location.href='/support'">
@@ -38,7 +40,8 @@
                 <div class="register-form-title">Login</div>
             </div>
             <div class="right-header">
-                <button id="login-button-register">Sign Up</button>
+                <button id="login-button-register" onclick="location.href='/register';">Sign up</button>
+
             </div>
         </div>
         
@@ -46,8 +49,8 @@
             {% csrf_token %}
 
             <div class="form-field">
-                {{ form.email.errors }}
-                {{ form.email }}
+                {{ form.username.errors }}
+                {{ form.username }}
             </div>
 
 
@@ -59,6 +62,21 @@
             <div class="register-button-container">
                 <button type="submit" class="register-button">Login</button>
             </div>
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    {% if 'login' in message.tags %}
+                        <div class="{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        
+
         </form>
     </div>
     
