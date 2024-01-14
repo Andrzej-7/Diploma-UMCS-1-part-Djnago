@@ -139,7 +139,6 @@ def custom_register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            # для того, щоб після реєстрації відразу авторизувати користувача
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -147,18 +146,27 @@ def custom_register(request):
 
             return redirect('create_exchange_order')
         else:
-            # Використовуємо тег 'registration' для помилок реєстрації
-            messages.error(request, form.errors, extra_tags='registration')
+            #зберігаємо помилки форми
+            form_errors = form.errors
+            messages.error(request, form_errors, extra_tags='registration')
+            #очищуємо поля форми
+            form = UserRegisterForm()
+            #додаємо збережені помилки до нової форми
+            form._errors = form_errors
+            #код зверху потрібний для того щоб після очищення форми помилки зберігались
     else:
         form = UserRegisterForm()
+
     return render(request, 'registration/register.html', {'form': form})
+
+
 
 
 
 
 def custom_login(request):
     if request.method == 'POST':
-        form = loginForm(request.POST)  # Упевніться, що LoginForm вірно імпортована та визначена
+        form = loginForm(request.POST)  
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -170,8 +178,10 @@ def custom_login(request):
             else:
                 # Використовуємо тег 'login' для помилок входу
                 messages.error(request, "Invalid username or password.", extra_tags='login')
+                
         else:
             messages.error(request, "Form data is not valid.", extra_tags='login')
+            
     else:
         form = loginForm()
 
