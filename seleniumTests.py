@@ -4,6 +4,8 @@ import random
 import string
 from selenium.webdriver.common.keys import Keys
 import time
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 def username_generator():
@@ -51,7 +53,6 @@ def password_generator(length, include_special_chars):
 
 def register_user(driver, username, password_length=12, include_special_chars=True):
 
-
     time.sleep(1)
     username_element = driver.find_element(By.XPATH, '//*[@id="id_username"]')
     username_element.send_keys(username)
@@ -74,11 +75,43 @@ def register_user(driver, username, password_length=12, include_special_chars=Tr
     register_button = driver.find_element(By.XPATH, '/html/body/div/form/div[5]/button')
     register_button.send_keys(Keys.ENTER)
 
+    return username, password
 
 
 def account_logOut():
     headerEmail = driver.find_element(By.XPATH, '/html/body/header/div/div/div/button')
+    actions = ActionChains(driver)
+    # kursor na headerEmail
+    actions.move_to_element(headerEmail).perform()
+
+    time.sleep(1)
     logOutButton = driver.find_element(By.XPATH, '/html/body/header/div/div/div/div/a[2]')
+    logOutButton.click()
+
+
+
+def account_login(driver, Account):
+    for username, password in Account.items():
+        login_header_button = driver.find_element(By.XPATH, '//*[@id="login-button"]')
+        login_header_button.click()  
+        time.sleep(0.5)
+
+        username_field = driver.find_element(By.XPATH, '//*[@id="id_username"]')
+        username_field.send_keys(username)
+
+        time.sleep(0.5)
+        password_field = driver.find_element(By.XPATH, '//*[@id="id_password"]')
+        password_field.send_keys(password)
+
+        time.sleep(0.5)
+        login_button = driver.find_element(By.XPATH, '/html/body/div/form/div[3]/button')
+        login_button.click()
+
+
+
+
+
+
 
 
 driver = webdriver.Firefox()
@@ -97,8 +130,21 @@ register_user(driver,username, 12, True)
 #good case reistration
 time.sleep(1)
 username = username_generator()
-register_user(driver,username, 12, True)
+username, password =  register_user(driver,username, 12, True)
 
 
+#wylogowanie
 time.sleep(1)
 account_logOut()
+
+#logowanie 
+time.sleep(1)
+Account = {}
+Account[username] = password
+account_login(driver, Account)
+
+
+#wylogowanie
+time.sleep(1)
+account_logOut()
+
