@@ -48,7 +48,7 @@
                 url: `/check_order_status/${orderId}/`,
                 success: function(response) {
                     if(response.is_processed) {
-                        $('#orderStatusMessage').text('Замовлення було оброблено.').show();
+                        $('#orderStatusMessage').text('Your order was successfully processed!').show();
                         clearInterval(pollInterval); // Зупиняємо опитування
                     }
                 },

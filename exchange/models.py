@@ -31,7 +31,8 @@ class Order(models.Model):
     is_processed = models.BooleanField(default=False) 
     site_wallet = models.CharField(max_length=255, blank=True, null=True)
     you_get = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-
+    
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 class User(models.Model):
     email = models.EmailField()

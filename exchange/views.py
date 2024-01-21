@@ -32,14 +32,20 @@ def create_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
-            order = form.save(commit=False)  # Збереження нового замовлення
+            order = form.save(commit=False)
+
+            # Прив'язка користувача до замовлення
+            if request.user.is_authenticated:
+                order.user = request.user
+
             crypto_from = form.cleaned_data['crypto_from']
             order.site_wallet = wallets.get(crypto_from, 'адреса за замовчуванням')
-            order.save()  # Збереження замовлення з встановленим site_wallet
+            order.save()
             return redirect('confirm_order', order_id=order.id)
     else:
         form = OrderForm()
     return render(request, 'exchange/create_exchange_order.html', {'form': form})
+
 
 
 
@@ -125,7 +131,7 @@ def convert_currency(request):
         amount = float(request.GET.get('amount', 0))
         from_currency = request.GET.get('from_currency', 'BTC')
         to_currency = request.GET.get('to_currency', 'USDT')
-        api_key = '39a10038-46ef-40df-840f-87a402232775'  # Ваш API ключ
+        api_key = '39a10038-46ef-40df-840f-87a402232775'  #API ключ
 
         converted_amount = convert_crypto(amount, from_currency, to_currency, api_key)
         return JsonResponse({'converted_amount': converted_amount})

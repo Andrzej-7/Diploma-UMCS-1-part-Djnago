@@ -13,9 +13,9 @@ class OrderAdmin(admin.ModelAdmin):
 
     def mark_as_processed(self, request, queryset):
         count = queryset.update(is_processed=True)
-        self.message_user(request, f"{count} замовлення(-ь) було(-о) оброблено.")
+        self.message_user(request, f"{count} order is marked as processed")
     
-    mark_as_processed.short_description = "Обробити замовлення"
+    mark_as_processed.short_description = "Proceed the order"
 
 
 admin.site.register(Order, OrderAdmin)
