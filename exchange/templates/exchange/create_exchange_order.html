@@ -126,6 +126,24 @@
         });
 
 
+        document.addEventListener("DOMContentLoaded", function() {
+            const amountInput = document.getElementById("id_amount");
+            amountInput.addEventListener("input", function() {
+                let value = amountInput.value;
+                
+                //for example values 02, 03, 04
+                if (value.startsWith('0') && value.length > 1) {
+                    amountInput.value = value.replace(/^0+/, '');
+                }
+
+                //for example values < 0
+                let amount = parseFloat(value);
+                if (value !== "" && (amount < 0 || isNaN(amount))) {
+                }
+            });
+        });
+
+
 
         document.getElementById('cryptoConverterForm').addEventListener('submit', function(e) {
             var checkbox = document.getElementById('agreementCheckbox');

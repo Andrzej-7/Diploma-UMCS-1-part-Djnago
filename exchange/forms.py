@@ -6,8 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Order
 
 
-
 class OrderForm(forms.ModelForm):
+
+
     class Meta:
         model = Order
         fields = ['email', 'crypto_from', 'amount', 'recipient_wallet', 'crypto_to', 'site_wallet']
@@ -16,6 +17,7 @@ class OrderForm(forms.ModelForm):
             'site_wallet': forms.HiddenInput(),  # Приховування поля 'site_wallet'
             
         }
+
 
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)

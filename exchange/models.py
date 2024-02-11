@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+
+
 ETH = "ETH"
 XMR = "XMR"
 DAI = "DAI"
