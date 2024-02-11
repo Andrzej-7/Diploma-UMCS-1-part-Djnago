@@ -38,7 +38,7 @@ def create_order(request):
                 order.user = request.user
 
             crypto_from = form.cleaned_data['crypto_from']
-            order.site_wallet = wallets.get(crypto_from, 'адреса за замовчуванням')
+            order.site_wallet = wallets.get(crypto_from, 'common adress')
 
             # Отримайте і збережіть обчислену суму з прихованого поля
             order.you_get = request.POST.get('converted_amount', 0)
@@ -71,12 +71,6 @@ def confirm_order(request, order_id):
 
 
 
-def thank_you(request):
-    
-    return render(request, 'exchange/thank_you.html')
-
-
-
 def mark_order_as_processed(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.is_processed = True
@@ -93,7 +87,7 @@ def mark_order_as_paid(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     order.is_paid = True
     order.save()
-    return JsonResponse({'message': 'Payment confirmed.'})
+    return JsonResponse({'message': 'Payment confirmed. We have 15 min to process this order'})
 
 def check_order_status(request, order_id):
     order = get_object_or_404(Order, pk=order_id)

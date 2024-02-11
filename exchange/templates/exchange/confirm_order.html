@@ -4,6 +4,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
 
 <body>
@@ -48,7 +52,7 @@
                 <p><strong>Email:</strong> {{ order.email }}</p>
 
                 <div class="crypto-detail">
-                    <p><strong>Give:</strong> {{ order.crypto_from }}</p>
+                    <p class="give-1"><strong>Give:</strong> {{ order.crypto_from }}</p>
                     <img src="{% static 'css/images/'|add:order.crypto_from|add:'.png' %}" alt="{{ order.crypto_from }}">
                 </div>
 
@@ -60,7 +64,7 @@
                     <img src="{% static 'css/images/'|add:order.crypto_to|add:'.png' %}" alt="{{ order.crypto_to }}">
                 </div>
                 
-                <p><strong>Amount:</strong> {{ order.you_get }}</p>
+                <p><strong >Amount:</strong> {{ order.you_get }}</p>
                 <p><strong>Wallet:</strong> {{ order.recipient_wallet }}</p>
             </div>
         
@@ -73,28 +77,45 @@
         <div class="instruction-container">
             
                 <h2 class="instruction-h2">Complete the exchange by following the instructions</h2>
-                <p>Dear customer! Please note that the payment window for your order is limited. The order must be paid within 18 minutes.</p>
-                <p><strong>1. Make the transfer using the following details:</strong></p>
+
+                <p class="customer-notice">Dear customer! Please note that the payment window for your order is limited. The order must be paid within 18 minutes.</p>
+
+                <p class="instruction-1"><strong>1. Make the transfer using the following details:</strong></p>
 
                 <div class = "payment-details">
 
                 <ul>
-                    <li><strong>Amount:</strong> {{ order.amount }}  {{ order.crypto_from }} </li>
-                    <li><strong>Wallet:</strong> {{ order.site_wallet }}</li>
-                    <li><strong>Purpose:</strong> Personal transfer</li>
+                    <li class="amount-1"><strong>Amount:</strong> {{ order.amount }}  {{ order.crypto_from }} </li>
+                    <li class="wallet-1"><strong>Wallet:</strong> {{ order.site_wallet }}</li>
+                    <li class="purpose-1"><strong>Purpose:</strong> Personal transfer</li>
                 </ul>
 
                 </div>
-                <p><strong>2. After making the payment, please press the "I Paid" button to proceed with your order.</strong></p>
-                <button type="button" id="cancelButton">Cancel</button>
+                <p class="instruction-2"><strong>2. After making the payment, please press the "I Paid" button to proceed with your order.</strong></p>
+
+                
             
 
 
             <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.id %}" method="post">
                 {% csrf_token %}
-                <button type="submit" id="processOrderButton">I paid</button>
+
+                <div class="buttons-container">
+
+                    <button type="submit" id="processOrderButton">I paid</button>
+                    <button type="button" id="cancelButton">Cancel</button>
+
+                        <div class="order-status">
+                            <div class="loader-container">
+                                <div class="loader"></div>
+                            </div>                          
+                        <div id="orderStatusMessage"></div>
+                    </div>
+
+                </div>
+
             </form>
-            <div id="orderStatusMessage"></div>
+            
 
 
         </div>
@@ -103,54 +124,72 @@
 
 
 
-
-
-
 </body>
-
-
-
 
 
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $(document).ready(function() {
-        var orderId = "{{ order.id }}";
+$(document).ready(function() {
+    var orderId = "{{ order.id }}";
+    var pollInterval; 
 
-        $("#paymentConfirmationForm").submit(function(e) {
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // Серіалізує дані форми
-                success: function(data) {
-                    $('#orderStatusMessage').text(data.message).show();
-                }
-            });
-        });
-
-        function pollOrderStatus() {
-            $.ajax({
-                url: `/check_order_status/${orderId}/`,
-                success: function(response) {
-                    if(response.is_processed) {
-                        $('#orderStatusMessage').text('Your order was successfully processed!').show();
-                        clearInterval(pollInterval); // Зупиняємо опитування
+    function checkOrderProcessed(initialCheck = false) {
+        $.ajax({
+            url: `/check_order_status/${orderId}/`,
+            success: function(response) {
+                if(response.is_processed) {
+                    //Якщо замовлення вже оброблене
+                    $('#processOrderButton, #cancelButton, .loader-container').hide();
+                    $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
+                    if (pollInterval) {
+                        clearInterval(pollInterval); 
                     }
-                },
-                error: function() {
-                    console.log('Error while checking order status');
+                } else if (initialCheck) {
+                    pollOrderStatus();
                 }
-            });
-        }
+            },
+            error: function() {
+                console.log('Error while checking order status');
+            }
+        });
+    }
 
-        var pollInterval = setInterval(pollOrderStatus, 1000); // Опитування кожні 1 секунду
+    checkOrderProcessed(true);
+
+    $("#paymentConfirmationForm").submit(function(e) {
+        e.preventDefault();
+        $('#processOrderButton, #cancelButton').hide();
+        $('.loader-container').show();
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data) {
+                $('#orderStatusMessage').text(data.message).show();
+                checkOrderProcessed();
+            },
+            error: function() {
+                $('.loader-container').hide();
+                $('#orderStatusMessage').text('Error processing order').show();
+            }
+        });
     });
+
+
+    function pollOrderStatus() {
+        pollInterval = setInterval(function() {
+            checkOrderProcessed();
+        }, 1000);
+    }
+});
+
+
 </script>
 
 {% endblock %}

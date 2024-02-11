@@ -86,7 +86,8 @@ body, html {
 
 
 .instruction-container {
-    
+    align-items: center; 
+    position: relative;
     width: 700px;
     height: 500px;
     padding: 20px;
@@ -112,6 +113,92 @@ body, html {
     font-family: 'Montserrat Alternates', sans-serif;
 }
 
+.customer-notice {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.instruction-1, .instruction-2{
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+
+.amount-1, .wallet-1, .details{
+    font-family: 'Lato', sans-serif;
+}
+
+
+#processOrderButton, #cancelButton {
+    width: 200px;
+    height: 75px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #111111;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+#processOrderButton:hover, #cancelButton:hover {
+    background-color: #333;
+}
+
+.buttons-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 50px;
+}
+
+
+
+#cancelButton {
+    background-color: #9d3131; 
+}
+
+
+.loader {
+    border: 4px solid #ccc6c6;
+    border-top: 4px solid #881c72;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    align-self: center;
+}
+
+.loader-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+    
+}
+
+.order-status {
+    width: 350px;
+    margin-top: 20;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 50px;
+}
+
+
+#orderStatusMessage {
+    font-family: 'Titillium Web', sans-serif; 
+    display: none; 
+}
 
 
 .payment-details {
