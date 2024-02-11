@@ -1,57 +1,161 @@
-body {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    background: radial-gradient(at 100% 40%,#9cabf9 0,transparent 47%),radial-gradient(at 80% 90%,#f7d3dd 0,transparent 20%),radial-gradient(at 75% 60%,#b1bdf9 0,transparent 50%),radial-gradient(at 50% 46%,#cddbf9 0,transparent 40%),radial-gradient(at 28% 39%,#e2fafc 0,transparent 40%),radial-gradient(at 0 90%,#d4c8f0 0,transparent 65%);
     font-family: Arial, sans-serif;
-    background-color: #121212; /* Темний фон */
-    color: #fff; /* Світлий текст */
+
 }
+
+.site-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    background: transparent;
+}
+
+.Wrap {
+    width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(59, 56, 56);
+}
+
+.site-title {
+    font-weight: bold;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 20px;
+}
+
+.site-color {
+    color: rgb(176, 89, 219); 
+}
+
+
+.site-title {
+    color: black;
+}
+
+.wrap-buttons {
+    display: flex;
+    align-items: center;
+}
+
+#signup-button, #login-button, #support-button {
+    background-color: transparent;
+    color: #000000; 
+    border: none; 
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 15px; 
+}
+
+#signup-button:hover, #login-button:hover, #support-button:hover {
+    color: #a774da;
+    background-color: transparent; 
+}
+
+
+.support-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    fill: rgb(0, 0, 0)505;
+}
+
 
 .container {
-    width: 80%;
-    margin: 0 auto;
+    width: 400px;
+    height: 300px;
     padding: 20px;
+    
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(8, 8, 8, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-h2 {
-    color: #fff; /* Світлий текст */
+
+
+.instruction-container {
+    
+    width: 700px;
+    height: 500px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(8, 8, 8, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.details {
-    background-color: #1e1e1e; /
-    padding: 15px;
-    border-radius: 8px;
+.parent-container {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 40px; 
+    margin-top: 60px; 
+    padding: 20px 0; 
+}
+
+.instruction-h2, .order-details-h2{
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+
+
+.payment-details {
+    background-color: #ebe9e9; 
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding: 10px; 
+    margin: 10px 0; 
+}
+
+
+.crypto-detail {
+    display: flex; 
+    align-items: center; 
+    gap: 7px; 
+}
+.crypto-detail p {
+    margin: 0; 
+}
+.crypto-detail img {
+    height: 25px; 
+    width: auto; 
+}
+
+
+
+
+.form-title {
+    width: 500px;
+    height: 90px;
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 800;
+    font-size: 38px;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
 
-.details p {
+.container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
     font-size: 16px;
-    color: #ddd; 
-}
-
-#paymentConfirmationForm {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#processOrderButton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#processOrderButton:hover {
-    background-color: #45a049; 
-}
-
-#orderStatusMessage {
-    display: none;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #444; 
-    background-color: #333; 
-    color: #a9a9a9; 
-    text-align: center;
-    border-radius: 4px;
 }

@@ -17,7 +17,6 @@ from django.contrib.auth.models import User
 
 
 
-
 wallets = {
     'ETH': 'ETH3bf69a829c08f1ee28b0c013c937209a',
     'XMR': 'XMR1ddb778e2b24b6e065a112080869c5f3',
@@ -40,6 +39,10 @@ def create_order(request):
 
             crypto_from = form.cleaned_data['crypto_from']
             order.site_wallet = wallets.get(crypto_from, 'адреса за замовчуванням')
+
+            # Отримайте і збережіть обчислену суму з прихованого поля
+            order.you_get = request.POST.get('converted_amount', 0)
+
             order.save()
             return redirect('confirm_order', order_id=order.id)
     else:
