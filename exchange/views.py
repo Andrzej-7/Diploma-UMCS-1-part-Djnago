@@ -94,6 +94,10 @@ def check_order_status(request, order_id):
     return JsonResponse({'is_processed': order.is_processed})
 
 
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    order.delete()
+    return redirect('create_exchange_order') 
 
 
 def get_conversion_rate(from_currency, to_currency, api_key):

@@ -20,5 +20,5 @@ urlpatterns = [
     path('convert_currency/', views.convert_currency, name='convert_currency'),
     path('logout/', auth_views.LogoutView.as_view(next_page='create_exchange_order'), name='logout'),
     path('create_exchange_order/', views.create_order, name='create_exchange_order'),
-
+    path('cancel_order/<int:order_id>/', views.cancel_order, name='cancel_order'),
 ]

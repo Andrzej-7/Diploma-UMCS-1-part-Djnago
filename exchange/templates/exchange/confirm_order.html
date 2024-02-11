@@ -13,7 +13,11 @@
 <body>
     <header class="site-header">
         <div class="Wrap">
-            <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+
+            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
+                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            </a>  
+            
             <div class="wrap-buttons">
                 <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
@@ -103,7 +107,7 @@
                 <div class="buttons-container">
 
                     <button type="submit" id="processOrderButton">I paid</button>
-                    <button type="button" id="cancelButton">Cancel</button>
+                    <a href="{% url 'cancel_order' order.id %}" class="cancel-button">Cancel</a>
 
                         <div class="order-status">
                             <div class="loader-container">
@@ -141,7 +145,7 @@ $(document).ready(function() {
             success: function(response) {
                 if(response.is_processed) {
                     //Якщо замовлення вже оброблене
-                    $('#processOrderButton, #cancelButton, .loader-container').hide();
+                    $('#processOrderButton, .cancel-button, .loader-container').hide();
                     $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
                     if (pollInterval) {
                         clearInterval(pollInterval); 
@@ -160,7 +164,7 @@ $(document).ready(function() {
 
     $("#paymentConfirmationForm").submit(function(e) {
         e.preventDefault();
-        $('#processOrderButton, #cancelButton').hide();
+        $('#processOrderButton, .cancel-button').hide();
         $('.loader-container').show();
 
         var form = $(this);
