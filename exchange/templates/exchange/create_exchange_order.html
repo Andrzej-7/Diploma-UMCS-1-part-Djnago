@@ -130,18 +130,21 @@
             const amountInput = document.getElementById("id_amount");
             amountInput.addEventListener("input", function() {
                 let value = amountInput.value;
-                
-                //for example values 02, 03, 04
-                if (value.startsWith('0') && value.length > 1) {
-                    amountInput.value = value.replace(/^0+/, '');
-                }
 
-                //for example values < 0
-                let amount = parseFloat(value);
-                if (value !== "" && (amount < 0 || isNaN(amount))) {
+                //якщо число складається більше ніж з одного символу
+                if (value.startsWith('0') && value.length > 1) {
+                    value = value.replace(/^0+/, '');
                 }
-            });
+                //що число не від'ємне
+                let amount = parseFloat(value);
+                if (amount < 0) {
+                    amountInput.value = ''; 
+                } else if (!isNaN(amount)) {
+                    amountInput.value = value;
+                }
+             });
         });
+
 
 
 
@@ -150,10 +153,10 @@
             var error = document.getElementById('agreementError');
 
             if (!checkbox.checked) {
-                e.preventDefault(); //не відправити форму
-                error.style.display = 'block'; //Вивести повідомлення про помилку
+                e.preventDefault(); 
+                error.style.display = 'block'; 
             } else {
-                error.style.display = 'none'; //не видавати помилку
+                error.style.display = 'none'; 
             }
         });
    
