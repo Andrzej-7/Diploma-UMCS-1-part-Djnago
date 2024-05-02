@@ -105,13 +105,13 @@
             
 
 
-            <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.id %}" method="post">
+            <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.uuid %}" method="post">
                 {% csrf_token %}
 
                 <div class="buttons-container">
 
                     <button type="submit" id="processOrderButton">I paid</button>
-                    <a href="{% url 'cancel_order' order.id %}" class="cancel-button">Cancel</a>
+                    <a href="{% url 'cancel_order' order.uuid %}" class="cancel-button">Cancel</a>
 
                         <div class="order-status">
                             <div class="loader-container">
@@ -154,63 +154,65 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(document).ready(function() {
-    var orderId = "{{ order.id }}";
-    var pollInterval; 
 
-    function checkOrderProcessed(initialCheck = false) {
-        $.ajax({
-            url: `/check_order_status/${orderId}/`,
-            success: function(response) {
-                if(response.is_processed) {
-                    //Якщо замовлення вже оброблене
-                    $('#processOrderButton, .cancel-button, .loader-container').hide();
-                    $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
-                    if (pollInterval) {
-                        clearInterval(pollInterval); 
+
+    $(document).ready(function() {
+        var orderId = "{{ order.uuid  }}";
+        var pollInterval; 
+    
+        function checkOrderProcessed(initialCheck = false) {
+            $.ajax({
+                url: `/check_order_status/${orderId}/`,
+                success: function(response) {
+                    if(response.is_processed) {
+                        //Якщо замовлення вже оброблене
+                        $('#processOrderButton, .cancel-button, .loader-container').hide();
+                        $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
+                        if (pollInterval) {
+                            clearInterval(pollInterval); 
+                        }
+                    } else if (initialCheck) {
+                        pollOrderStatus();
                     }
-                } else if (initialCheck) {
-                    pollOrderStatus();
+                },
+                error: function() {
+                    console.log('Error while checking order status');
                 }
-            },
-            error: function() {
-                console.log('Error while checking order status');
-            }
+            });
+        }
+    
+        checkOrderProcessed(true);
+    
+        $("#paymentConfirmationForm").submit(function(e) {
+            e.preventDefault();
+            $('#processOrderButton, .cancel-button').hide();
+            $('.loader-container').show();
+    
+            var form = $(this);
+            var url = form.attr('action');
+    
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function(data) {
+                    $('#orderStatusMessage').text(data.message).show();
+                    checkOrderProcessed();
+                },
+                error: function() {
+                    $('.loader-container').hide();
+                    $('#orderStatusMessage').text('Error processing order').show();
+                }
+            });
         });
-    }
-
-    checkOrderProcessed(true);
-
-    $("#paymentConfirmationForm").submit(function(e) {
-        e.preventDefault();
-        $('#processOrderButton, .cancel-button').hide();
-        $('.loader-container').show();
-
-        var form = $(this);
-        var url = form.attr('action');
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(),
-            success: function(data) {
-                $('#orderStatusMessage').text(data.message).show();
+    
+    
+        function pollOrderStatus() {
+            pollInterval = setInterval(function() {
                 checkOrderProcessed();
-            },
-            error: function() {
-                $('.loader-container').hide();
-                $('#orderStatusMessage').text('Error processing order').show();
-            }
-        });
+            }, 1000);
+        }
     });
-
-
-    function pollOrderStatus() {
-        pollInterval = setInterval(function() {
-            checkOrderProcessed();
-        }, 1000);
-    }
-});
 
 
 </script>

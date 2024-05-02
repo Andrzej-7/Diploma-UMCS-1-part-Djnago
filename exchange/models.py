@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -22,6 +23,7 @@ cryptoChoises = ((ETH, "eth"),
 
 
 class Order(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     email = models.EmailField()
     crypto_from = models.CharField(max_length=255, choices=cryptoChoises)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -31,7 +33,6 @@ class Order(models.Model):
     is_processed = models.BooleanField(default=False)
     site_wallet = models.CharField(max_length=255, blank=True, null=True)
     you_get = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 

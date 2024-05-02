@@ -130,6 +130,8 @@
     
 
 <script>
+    
+    
         document.addEventListener('DOMContentLoaded', function() {
             function updateConversion() {
                 var amount = document.querySelector('input[name="amount"]').value;
@@ -147,6 +149,8 @@
 
             document.getElementById('cryptoConverterForm').addEventListener('input', updateConversion);
         });
+        
+        
 
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -168,9 +172,7 @@
              });
         });
 
-
-
-
+        
         document.getElementById('cryptoConverterForm').addEventListener('submit', function(e) {
             var checkbox = document.getElementById('agreementCheckbox');
             var error = document.getElementById('agreementError');
@@ -185,9 +187,9 @@
    
 
 
-    function logout() {
-        document.getElementById('logout-form').submit();
-    }
+        function logout() {
+            document.getElementById('logout-form').submit();
+        }
 
 
 </script>

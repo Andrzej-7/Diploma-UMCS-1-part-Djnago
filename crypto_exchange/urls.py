@@ -13,12 +13,14 @@ urlpatterns = [
     path('login/', views.custom_login, name='login'),
     path('register/', views.custom_register, name='register'),
     path('create_order/', views.create_order, name='create_order'),
-    path('confirm_order/<int:order_id>/', views.confirm_order, name='confirm_order'),
-    path('mark_as_processed/<int:order_id>/', mark_order_as_processed, name='mark_as_processed'),
-    path('mark_as_paid/<int:order_id>/', views.mark_order_as_paid, name='mark_as_paid'),
-    path('check_order_status/<int:order_id>/', views.check_order_status, name='check_order_status'),
+    path('confirm_order/<uuid:uuid>/', views.confirm_order, name='confirm_order'),
+
+    path('mark_as_processed/<uuid:uuid>/',views.mark_order_as_processed, name='mark_as_processed'),
+    path('mark_as_paid/<uuid:uuid>/', views.mark_order_as_paid, name='mark_as_paid'),
+
+    path('check_order_status/<uuid:uuid>/', views.check_order_status, name='check_order_status'),
     path('convert_currency/', views.convert_currency, name='convert_currency'),
     path('logout/', auth_views.LogoutView.as_view(next_page='create_exchange_order'), name='logout'),
     path('create_exchange_order/', views.create_order, name='create_exchange_order'),
-    path('cancel_order/<int:order_id>/', views.cancel_order, name='cancel_order'),
+    path('cancel_order/<uuid:uuid>/', views.cancel_order, name='cancel_order'),
 ]
