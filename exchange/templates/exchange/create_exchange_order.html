@@ -60,6 +60,13 @@
                 <option value="ETH">Ethereum (ETH)</option>
                 <option value="XMR">Monero (XMR)</option>
                 <option value="DAI">Dai (DAI)</option>
+                
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="LTC">Litecoin (LTC)</option>
+                <option value="XLM">Stellar (XLM)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="XRP">Ripple (XRP)</option>
                 <!--  інші криптовалюти  -->
             </select>
         </div>
@@ -76,7 +83,16 @@
                 <option value="ETH">Ethereum (ETH)</option>
                 <option value="XMR">Monero (XMR)</option>
                 <option value="DAI">Dai (DAI)</option>
+                
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="LTC">Litecoin (LTC)</option>
+                <option value="XLM">Stellar (XLM)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="XRP">Ripple (XRP)</option>
                 <!--  інші криптовалюти  -->
+                
+                
             </select>
         </div>
 
@@ -132,25 +148,28 @@
 <script>
     
     
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateConversion() {
-                var amount = document.querySelector('input[name="amount"]').value;
-                if (!amount) return; //if not amount is entered
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateConversion() {
+            var amount = document.querySelector('input[name="amount"]').value;
+            if (!amount) return; //if not amount is entered
+    
+            var from_currency = document.querySelector('select[name="crypto_from"]').value;
+            var to_currency = document.querySelector('select[name="crypto_to"]').value;
+    
+            fetch(`/convert_currency/?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('converted_amount').value = data.converted_amount.toFixed(4);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
         
-                var from_currency = document.querySelector('select[name="crypto_from"]').value;
-                var to_currency = document.querySelector('select[name="crypto_to"]').value;
-        
-                fetch(`/convert_currency/?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('converted_amount').value = data.converted_amount.toFixed(4);
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        
-            
-            document.getElementById('id_amount').addEventListener('input', updateConversion);
-        });
+        document.getElementById('id_amount').addEventListener('input', updateConversion);
+        document.getElementById('id_crypto_from').addEventListener('input', updateConversion);
+        document.getElementById('id_crypto_to').addEventListener('input', updateConversion);
+    });
+
 
         
         

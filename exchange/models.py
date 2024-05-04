@@ -3,9 +3,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 ETH = "ETH"
 XMR = "XMR"
@@ -13,13 +10,26 @@ DAI = "DAI"
 DASH = "DASH"
 Dogecoin = "Dogecoin"
 Bitcoin = "BTC"
+USDT = "USDT"
+BNB = "BNB"
+LTC = "LTC"
+XLM = "XLM"
+ADA = "ADA"
+XRP = "XRP"
 
 cryptoChoises = ((ETH, "eth"),
                  (XMR, "xmr"),
                  (DAI, "dai"),
                  (DASH, "dash"),
                  (Dogecoin, "dogecoin"),
-                 (Bitcoin, "bitcoin"),)
+                 (Bitcoin, "bitcoin"),
+
+                 (LTC, "LTC"),
+                 (XLM, "stellar"),
+                 (ADA, "cardano"),
+                 (BNB, "BNB"),
+                 (XRP, "XRP"),
+                 (USDT, "usdt"))
 
 
 class Order(models.Model):
