@@ -155,64 +155,49 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 
+$(document).ready(function() {
+    var orderId = "{{ order.uuid }}";
+    var pollInterval;
 
-    $(document).ready(function() {
-        var orderId = "{{ order.uuid  }}";
-        var pollInterval; 
-    
-        function checkOrderProcessed(initialCheck = false) {
-            $.ajax({
-                url: `/check_order_status/${orderId}/`,
-                success: function(response) {
-                    if(response.is_processed) {
-                        //Якщо замовлення вже оброблене
-                        $('#processOrderButton, .cancel-button, .loader-container').hide();
-                        $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
-                        if (pollInterval) {
-                            clearInterval(pollInterval); 
-                        }
-                    } else if (initialCheck) {
-                        pollOrderStatus();
-                    }
-                },
-                error: function() {
-                    console.log('Error while checking order status');
-                }
-            });
-        }
-    
-        checkOrderProcessed(true);
-    
-        $("#paymentConfirmationForm").submit(function(e) {
-            e.preventDefault();
+   
+    function updateUI(isProcessed, isPaid, message) {
+        if (isProcessed) {
+            $('#processOrderButton, .cancel-button, .loader-container').hide();
+            $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
+            clearInterval(pollInterval); 
+        } else if (isPaid) {
             $('#processOrderButton, .cancel-button').hide();
             $('.loader-container').show();
-    
-            var form = $(this);
-            var url = form.attr('action');
-    
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function(data) {
-                    $('#orderStatusMessage').text(data.message).show();
-                    checkOrderProcessed();
-                },
-                error: function() {
-                    $('.loader-container').hide();
-                    $('#orderStatusMessage').text('Error processing order').show();
-                }
-            });
-        });
-    
-    
-        function pollOrderStatus() {
-            pollInterval = setInterval(function() {
-                checkOrderProcessed();
-            }, 1000);
+            $('#orderStatusMessage').text(message || 'Payment confirmed. We have 15 min to process this order').show();
+        } else {
+            $('#processOrderButton, .cancel-button').show();
+            $('.loader-container').hide();
+            $('#orderStatusMessage').hide();
         }
-    });
+    }
+
+    function checkOrderProcessed() {
+        $.ajax({
+            url: `/check_order_status/${orderId}/`,
+            success: function(response) {
+                updateUI(response.is_processed, response.is_paid, response.status_message);
+            },
+            error: function() {
+                console.log('Error while checking order status');
+            }
+        });
+    }
+
+    
+    function pollOrderStatus() {
+        pollInterval = setInterval(checkOrderProcessed, 1000);
+    }
+
+    
+    checkOrderProcessed();
+    pollOrderStatus();
+});
+
 
 
 </script>

@@ -33,10 +33,10 @@ def create_order(request):
             if request.user.is_authenticated:
                 order.user = request.user
             order.save()
-            # Редирект за допомогою UUID
             return redirect('confirm_order', uuid=order.uuid)
     else:
         form = OrderForm()
+
     return render(request, 'exchange/create_exchange_order.html', {'form': form})
 
 
@@ -60,21 +60,30 @@ def mark_order_as_processed(request, uuid):
     return JsonResponse({'message': f'Order {order.uuid} is processed.'})
 
 
-def check_order_status(request, uuid):
-    order = get_object_or_404(Order, uuid=uuid)
-    return JsonResponse({'is_processed': order.is_processed})
+
 
 
 def mark_order_as_paid(request, uuid):
-    order = get_object_or_404(Order, uuid=uuid)
-    order.is_paid = True
-    order.save()
-    return JsonResponse({'message': 'Payment confirmed. We have 15 min to process this order'})
+    if request.method == 'POST':
+        order = get_object_or_404(Order, uuid=uuid)
+        order.is_paid = True
+        order.save()
+        request.session['order_status'] = 'Payment confirmed. We have 15 min to process this order'
+        return redirect('confirm_order', uuid=order.uuid)  # Redirect to the confirmation page
+    return JsonResponse({'message': 'Invalid request method'}, status=405)
+
+
+
 
 
 def check_order_status(request, uuid):
     order = get_object_or_404(Order, uuid=uuid)
-    return JsonResponse({'is_processed': order.is_processed})
+    status_message = request.session.get('order_status', '')
+    return JsonResponse({
+        'is_processed': order.is_processed,
+        'is_paid': order.is_paid,
+        'status_message': status_message
+    }, status=200)
 
 
 def cancel_order(request, uuid):
