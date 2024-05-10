@@ -444,6 +444,17 @@ align-items: center;
     background: transparent;
 }
 
+.footer-confirm-order, .footer-login {
+    margin-top:225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    background: transparent;
+}
+
+
+
 .footer-wrap {
     width: 1100px;
     display: flex;
