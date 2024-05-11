@@ -7,8 +7,6 @@ from .models import Order
 
 
 
-
-
 class OrderForm(django.forms.ModelForm):
 
 
@@ -18,13 +16,12 @@ class OrderForm(django.forms.ModelForm):
 
         widgets = {
             'site_wallet': django.forms.HiddenInput(),  #Приховування поля 'site_wallet'
-            
         }
 
 
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        
+
 
 
 

@@ -17,7 +17,16 @@ import uuid
 wallets = {
     'ETH': 'ETH3bf69a829c08f1ee28b0c013c937209a',
     'XMR': 'XMR1ddb778e2b24b6e065a112080869c5f3',
-    #інші варіанти криптовалют
+    'BTC': '1FfmbHfnpaZjKFvyi1okTjJJusN455paPH',
+    'DAI': '0x5A385E6A13f935665B3b44897Dd12E4018f5903C',
+
+    'BNB': '0x582917412Ab41D614509a44652933204d4aea7Cb',
+    'USDT': '3JR1KJyNxCws7gsjDRdJmVqovy4zuQsR9w',
+    'LTC': 'LgStpGGzSCfR7V6WRmL168BNwGvDi2joRm',
+    'XLM': 'GABFQIK63R2NETJM7T673EAMZN4RJLLGP3',
+    'ADA': '63R2N1FfmbHfnpaZmVqovyEAMZNpaZjK',
+    'XRP': 'E6A13f93NETJM7T6Ab41D614509a446VqovyEAM'
+
 }
 
 
@@ -32,6 +41,10 @@ def create_order(request):
             order = form.save(commit=False)
             if request.user.is_authenticated:
                 order.user = request.user
+
+            crypto_from = form.cleaned_data['crypto_from']
+            order.site_wallet = wallets.get(crypto_from, 'No wallet provided')
+
             order.save()
             return redirect('confirm_order', uuid=order.uuid)
     else:
@@ -44,13 +57,15 @@ def confirm_order(request, uuid):
     order = get_object_or_404(Order, uuid=uuid)
 
     if request.method == 'POST':
-        order.is_paid = True  # Встановіть, що замовлення оплачено
-
-        crypto_from = order.crypto_from  # Отримайте вибір криптовалюти
+        order.is_paid = True
+        crypto_from = order.crypto_from
         order.site_wallet = wallets.get(crypto_from, 'example adress')
-        order.save()  # Збережіть зміни
+        order.save()
 
     return render(request, 'exchange/confirm_order.html', {'order': order})
+
+
+
 
 
 def mark_order_as_processed(request, uuid):
