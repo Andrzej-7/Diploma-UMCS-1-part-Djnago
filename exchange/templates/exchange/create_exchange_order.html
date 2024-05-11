@@ -122,7 +122,8 @@
             
         </div>
 
-        <p id="agreementError" style="color: red; display: none;">Please confirm user agreement</p>
+        <p id="formError" style="color: red; display: none;"></p>
+        
     </form>
 </div>
     
@@ -181,39 +182,50 @@
         
 
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const amountInput = document.getElementById("id_amount");
-            amountInput.addEventListener("input", function() {
-                let value = amountInput.value;
-
-                //якщо число складається більше ніж з одного символу
-                if (value.startsWith('0') && value.length > 1) {
-                    value = value.replace(/^0+/, '');
-                }
-                //що число не від'ємне
-                let amount = parseFloat(value);
-                if (amount < 0) {
-                    amountInput.value = ''; 
-                } else if (!isNaN(amount)) {
-                    amountInput.value = value;
-                }
-             });
+        document.getElementById("id_amount").addEventListener("input", function() {
+            const amount = parseFloat(this.value);
+            if (amount < 0 || isNaN(amount)) {
+                this.value = ''; //сlear field 
+            }
         });
 
         
-        document.getElementById('cryptoConverterForm').addEventListener('submit', function(e) {
-            var checkbox = document.getElementById('agreementCheckbox');
-            var error = document.getElementById('agreementError');
-
-            if (!checkbox.checked) {
-                e.preventDefault(); 
-                error.style.display = 'block'; 
-            } else {
-                error.style.display = 'none'; 
-            }
+        
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            const form = document.getElementById('cryptoConverterForm');
+            const walletInput = document.getElementById("id_recipient_wallet");
+            const cryptoFromSelect = document.getElementById("id_crypto_from");
+            const formError = document.getElementById('formError');
+            const agreementCheckbox = document.getElementById('agreementCheckbox');
+        
+            form.addEventListener("submit", function(e) {
+                const walletValue = walletInput.value;
+                const cryptoFromValue = cryptoFromSelect.value;
+        
+                //clear errors
+                formError.style.display = 'none';
+                formError.textContent = '';
+        
+                //wallet validation
+                const walletRegex = new RegExp("^" + cryptoFromValue + "[A-Za-z0-9]+$");
+                if (!walletRegex.test(walletValue) || walletValue.length < 10) {
+                    walletInput.value = ""; //clear filed
+                    formError.textContent = "Invalid wallet address.";
+                    formError.style.display = 'block';
+                    e.preventDefault(); // stop sending form
+                }
+        
+                //user agreement validatiom
+                if (!agreementCheckbox.checked) {
+                    formError.textContent = (formError.textContent ? formError.textContent + "   Also, please confirm the user agreement " : "Please confirm the user agreement ");
+                    formError.style.display = 'block';
+                    e.preventDefault();
+                }
+            });
         });
-   
-
+    
 
         function logout() {
             document.getElementById('logout-form').submit();
