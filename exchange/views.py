@@ -111,17 +111,19 @@ def get_conversion_rate(from_currency, to_currency, api_key):
     }
     parameters = {
         'symbol': ','.join([from_currency, to_currency]),
-        'convert': 'USD'  # Використовуємо USD як проміжну валюту для конвертації
+        'convert': 'USD'
     }
-
     response = requests.get(url, headers=headers, params=parameters)
     data = response.json()
 
-    from_price = data['data'][from_currency]['quote']['USD']['price']
-    to_price = data['data'][to_currency]['quote']['USD']['price']
+    if 'data' in data and from_currency in data['data'] and to_currency in data['data']:
+        from_price = data['data'][from_currency]['quote']['USD']['price']
+        to_price = data['data'][to_currency]['quote']['USD']['price']
+        rate = from_price / to_price
+        return rate
+    else:
+        raise ValueError("API response is missing 'data' or currency information.")
 
-    rate = from_price / to_price
-    return rate
 
 
 
@@ -170,6 +172,7 @@ def custom_register(request):
         form = UserRegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
 
 
 def custom_login(request):
