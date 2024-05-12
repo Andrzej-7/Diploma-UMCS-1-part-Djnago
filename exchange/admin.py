@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['email', 'crypto_from', 'crypto_from', 'is_paid', 'process_order_link']
+    list_display = ['email', 'crypto_from', 'crypto_to', 'is_paid', 'recipient_wallet', 'process_order_link', 'is_processed']
 
     def process_order_link(self, obj):
         return format_html('<a class="button" href="{}">Process Order</a>',

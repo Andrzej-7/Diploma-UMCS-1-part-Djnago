@@ -12,7 +12,9 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from .forms import loginForm
 from django.contrib.auth.models import User
-import uuid
+from decimal import Decimal
+
+api_key = '39a10038-46ef-40df-840f-87a402232775'
 
 wallets = {
 
@@ -45,6 +47,8 @@ def create_order(request):
 
             crypto_from = form.cleaned_data['crypto_from']
             order.site_wallet = wallets.get(crypto_from, 'No wallet provided')
+            order.you_get = convert_crypto(form.cleaned_data['amount'], form.cleaned_data['crypto_from'],
+                                           form.cleaned_data['crypto_to'], api_key)
 
             order.save()
             return redirect('confirm_order', uuid=order.uuid)
@@ -66,17 +70,11 @@ def confirm_order(request, uuid):
     return render(request, 'exchange/confirm_order.html', {'order': order})
 
 
-
-
-
 def mark_order_as_processed(request, uuid):
     order = get_object_or_404(Order, uuid=uuid)
     order.is_processed = True
     order.save()
     return JsonResponse({'message': f'Order {order.uuid} is processed.'})
-
-
-
 
 
 def mark_order_as_paid(request, uuid):
@@ -87,9 +85,6 @@ def mark_order_as_paid(request, uuid):
         request.session['order_status'] = 'Payment confirmed. We have 15 min to process this order'
         return redirect('confirm_order', uuid=order.uuid)  # Redirect to the confirmation page
     return JsonResponse({'message': 'Invalid request method'}, status=405)
-
-
-
 
 
 def check_order_status(request, uuid):
@@ -129,10 +124,13 @@ def get_conversion_rate(from_currency, to_currency, api_key):
     return rate
 
 
+
+
 def convert_crypto(amount, from_currency, to_currency, api_key):
     rate = get_conversion_rate(from_currency, to_currency, api_key)
-    converted_amount = amount * rate
+    converted_amount = float(amount) * float(rate)
     return converted_amount
+
 
 
 def convert_currency(request):
@@ -143,7 +141,6 @@ def convert_currency(request):
 
     from_currency = request.GET.get('from_currency', 'BTC')
     to_currency = request.GET.get('to_currency', 'BTC')
-    api_key = '39a10038-46ef-40df-840f-87a402232775'  # API ключ
 
     converted_amount = convert_crypto(amount, from_currency, to_currency, api_key)
     return JsonResponse({'converted_amount': converted_amount})

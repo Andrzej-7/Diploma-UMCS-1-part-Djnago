@@ -199,10 +199,12 @@
             const cryptoFromSelect = document.getElementById("id_crypto_from");
             const formError = document.getElementById('formError');
             const agreementCheckbox = document.getElementById('agreementCheckbox');
+            const cryptoToSelect = document.getElementById("id_crypto_to");
         
             form.addEventListener("submit", function(e) {
                 const walletValue = walletInput.value;
                 const cryptoFromValue = cryptoFromSelect.value;
+                const cryptoToValue = cryptoToSelect.value;
         
                 //clear errors
                 formError.style.display = 'none';
@@ -219,10 +221,20 @@
         
                 //user agreement validatiom
                 if (!agreementCheckbox.checked) {
-                    formError.textContent = (formError.textContent ? formError.textContent + "   Also, please confirm the user agreement " : "Please confirm the user agreement ");
+                    formError.textContent = (formError.textContent ? formError.textContent + "   Also, please confirm the user agreement " : "Please confirm the user agreement. ");
                     formError.style.display = 'block';
                     e.preventDefault();
                 }
+                
+                
+                //ex. BTC-BTC - bad
+               // if (cryptoFromValue === cryptoToValue) {
+               //     formError.textContent = (formError.textContent ? formError.textContent + " Also, select different cryptocurrencies " : "Select different cryptocurrencies. ");
+                //    formError.style.display = 'block';
+               //     e.preventDefault(); // Зупиняємо відправку форми
+              //  }
+                
+                
             });
         });
     
