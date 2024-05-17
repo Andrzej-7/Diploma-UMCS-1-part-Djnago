@@ -197,3 +197,10 @@ def custom_login(request):
         form = loginForm()
 
     return render(request, 'registration/login.html', {'form': form})
+
+
+def aml_policy(request):
+    return render(request, 'agreements/aml.html')
+
+def user_agreement(request):
+    return render(request, 'agreements/aml.html')

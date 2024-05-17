@@ -331,7 +331,7 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
 
 .error-message {
     color: red;
-    margin-bottom: 5px; /* Додатковий відступ для помилок */
+    margin-bottom: 5px;
 }
 
 
@@ -434,60 +434,117 @@ align-items: center;
 
 
 
+
 /* ---------footer styles--------------------*/
 
 .footer {
+    margin-top: 80px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 120px;
+    align-items: flex-start;
+    height: auto;
     background: transparent;
+    position: relative;
+    color: #333;
 }
 
-.footer-confirm-order, .footer-login {
-    margin-top:225px;
+.footer-login {
+    margin-top: 150px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 120px;
+    align-items: flex-start;
+    height: auto;
     background: transparent;
+    position: relative;
+    color: #333;
 }
 
-
-
-.footer-wrap {
+.footer-container {
     width: 1100px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
     border-top: 1px solid rgb(59, 56, 56);
+    padding-top: 10px;
 }
 
-.footer-buttons {
+.footer-column {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 30px;
+}
+
+.footer-heading {
+    margin-top: 0;
+    margin-bottom: 5px;
 }
 
 .footer-link {
-
-    margin: 0 30px;
+    margin: 2px 0;
     background-color: transparent;
     color: #000000;
     border: none;
-    padding: 5px 10px;
+    padding: 5px 0;
     font-size: 14px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
     text-decoration: none;
-
+    text-align: center;
 }
 
 .footer-link:hover {
     color: #a774da;
     background-color: transparent;
+}
 
+.social-links, .policy-links, .contact-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.rights {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+
+
+/* -------------policy-page----------------*/
+
+
+.policy-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 100px 100px;
+    gap: 30px;
+}
+
+
+.policy-box {
+    width: 700px;
+    height: 830px;
+    background: #f1f1f1;
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(8, 8, 8, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.policy-box h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
 }
 

@@ -14,10 +14,10 @@ urlpatterns = [
     path('register/', views.custom_register, name='register'),
     path('create_order/', views.create_order, name='create_order'),
     path('confirm_order/<uuid:uuid>/', views.confirm_order, name='confirm_order'),
-
+    path('aml/', views.aml_policy, name='aml_policy'),
+    path('aml/', views.user_agreement, name='user_agreement'),
     path('mark_as_processed/<uuid:uuid>/',views.mark_order_as_processed, name='mark_as_processed'),
     path('mark_as_paid/<uuid:uuid>/', views.mark_order_as_paid, name='mark_as_paid'),
-
     path('check_order_status/<uuid:uuid>/', views.check_order_status, name='check_order_status'),
     path('convert_currency/', views.convert_currency, name='convert_currency'),
     path('logout/', auth_views.LogoutView.as_view(next_page='create_exchange_order'), name='logout'),

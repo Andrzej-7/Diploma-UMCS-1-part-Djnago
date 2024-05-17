@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
+    
+</head>
+
+{% block content %}
+
+<body>
+
+    <header class="site-header">
+        <div class="Wrap">
+            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
+                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
+            </a>            
+                <div class="wrap-buttons">
+                    <!--  logo for support button  -->
+                <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
+                    <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
+                        <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
+                    </svg>
+                    Support
+                </button>
+                    <!--  buttons  -->
+                    <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
+                    <button id="login-button" onclick="location.href='/login'">Log In</button>
+                </div>
+        </div>
+    </header>
+    
+    
+    
+    <div class="policy-container">
+        
+        <div class="policy-box user-agreement">
+            <h2>User Agreement</h2>
+            <p>
+                
+                <h4>1. It's prohibited to access, use, or attempted to access or use, CryptoExchange Services directly or indirectly with (1) jurisdictions CryptoExchange has deemed high risk, including but not limited to, Cuba, Iran, North Korea, Syria, Crimea region or (2) persons CryptoExchange has deemed high risk, including but not limited to, individuals or entities named as a restricted person or party on any list maintained by the United States of America., United Kingdom, European Union or United Nations, including the sanctions lists maintained by the U.S. Office of Foreign Assets Control or the Denied Persons List or Entity List maintained by the U.S. Department of Commerce</h4>
+                <h4>2. All documents and information you provide to us are true, accurate, complete, and up to date in all respects, and may be relied upon by us in determining whether or not you are eligible to access the Platform or to use the CryptoExchange Services</h4>
+                <h4>3. All decisions made in connection with these Terms were solely and exclusively based on your own judgement and after your own independent appraisal of your financial resources, ability and willingness to take relevant risks and financial objectives</h4>
+                <h4>4. Modify or adapt the whole or any part of the Platform or combine or incorporate the Platform into another programme or application</h4>
+                <h4>5. Modify, replicate, duplicate, copy, download, store, further transmit, disseminate, transfer, disassemble, broadcast, publish, remove or alter any copyright statement or label, or licence, sub-licence, sell, mirror, design, rent, lease, private label, grant security interests in such CryptoExchange IP or any part of the intellectual properties, or create derivative works or otherwise take advantage of any part of the CryptoExchange IP;</h4>
+            </p>
+        </div>
+        
+        <div class="policy-box aml-policy">
+            <h2>Anti Money Laundering (AML)</h2>
+            <p>
+                <h4>1. AML is tightly linked to Know Your Customer (KYC) requirements, which essentially involve verifying customers' identities and the sources of their income. KYC also requires financial institutions to monitor their users' activity on an ongoing basis. Like AML, modern KYC procedures are heavily automated, and many institutions use the client onboarding process as an opportunity to acquire proper identification from new customers</h4>
+                <h4>2. Many governmental institutions and pieces of legislation play roles in establishing AML requirements. In the US, agencies like the Securities and Exchange Commission (SEC) and the Commodity Futures Trading Commission (CFTC) provide general information and resources for broker-dealers, and futures commission merchants to set AML standards</h4>
+                <h4>3. Anti-money laundering (AML) is a broad term for laws and regulations put in place to prevent criminals from making money illegally or moving illicit funds. While many illegal activities are targeted by AML laws, some of the most important are tax evasion, public corruption, and market manipulation through methods such as wash trading</h4>
+                <h4>4.  We may at any time modify or discontinue, temporarily or permanently, any portion or feature of the CryptoExchange Services.  In particular, we may:  (1) refuse to complete or block, cancel, or, where permitted by Applicable Law, reverse any Transaction you have authorised; (2) terminate, suspend, or restrict your access to any or all of the CryptoExchange Services</h4>
+                <h4>5. “Transaction” means selling, purchasing, or entering into (or agreeing to enter into) other transactions in Virtual Assets, their derivatives, other asset(s), or product(s) as CryptoExchange may from time to time make available on the Platform, and depositing or withdrawing Virtual Assets or Fiat Currency into or out of your CryptoExchange Account.</h4>
+                
+            </p>
+        </div>
+        
+    </div>
+    
+    
+    
+
+    <footer class="footer-login">
+        <div class="footer-container">
+            <div class="footer-column" id="contact-section">
+                <p class="footer-heading">Contact us:</p>
+                <div class="contact-links">
+                    <a class="footer-link" href="mailto:support@cryptoexchange.com">support@cryptoexchange.com</a>
+                    <a class="footer-link" href="tel:+1234567890">+1 (234) 567-890</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <p class="footer-heading">Follow us:</p>
+                <div class="social-links">
+                    <a class="footer-link" href="https://facebook.com/" target="_blank">Facebook</a>
+                    <a class="footer-link" href="https://linkedin.com/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <p class="footer-heading">Legal:</p>
+                <div class="policy-links">
+                    <a class="footer-link" href="/aml">User Agreement</a>
+                    <a class="footer-link" href="/aml">AML policy</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </footer>
+    
+    
+
+
+</body>
+{% endblock %}

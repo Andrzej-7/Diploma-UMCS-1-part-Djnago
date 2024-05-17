@@ -15,7 +15,7 @@
             <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
         
             <div class="wrap-buttons">
-                <button id="support-button" onclick="location.href=' '">
+                <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
                     <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
                         <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
@@ -128,18 +128,49 @@
         </form>
     </div>
 
-    <div class="footer">
-        <div class="footer-wrap">
-            <div class="footer-buttons">
-                <a class="footer-link" href="#">Exchange</a>
-                <a class="footer-link" href="#">Reviews</a>
-                <a class="footer-link" href="#">Partners</a>
-                <a class="footer-link" href="#">Contacts</a>
-                <a class="footer-link" href="#">AML agreement</a>
+    
+  
+    
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column" id="contact-section">
+            <p class="footer-heading">Contact us:</p>
+            <div class="contact-links">
+                <a class="footer-link" href="mailto:support@cryptoexchange.com">support@cryptoexchange.com</a>
+                <a class="footer-link" href="tel:+1234567890">+1 (234) 567-890</a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <p class="footer-heading">Follow us:</p>
+            <div class="social-links">
+                <a class="footer-link" href="https://facebook.com/" target="_blank">Facebook</a>
+                <a class="footer-link" href="https://linkedin.com/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+        
+        <div class="footer-column">
+            <p class="footer-heading">Legal:</p>
+            <div class="policy-links">
+                <a class="footer-link" href="/aml">User Agreement</a>
+                <a class="footer-link" href="/aml">AML policy</a>
             </div>
         </div>
     </div>
+    
+    
+    
+    
+</footer>
 
+
+
+
+
+
+
+    
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateConversion() {
