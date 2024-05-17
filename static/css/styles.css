@@ -112,8 +112,17 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 20px;
+
 }
 
+.main-form-container input[type="text"]:focus,
+.main-form-container input[type="email"]:focus,
+.main-form-container select:focus,
+.main-form-container textarea:focus,
+.main-form-container #id_amount:focus {
+    outline: none;
+    border: 2px solid #000;
+}
 
 .agreement input[type="checkbox"] {
     width: 15px;
