@@ -18,9 +18,9 @@
         <div class="Wrap">
             <a href="{% url 'create_exchange_order' %}" class="site-title-link">
                 <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
-            </a>            
-                <div class="wrap-buttons">
-                    <!--  logo for support button  -->
+            </a>    
+        
+            <div class="wrap-buttons">
                 <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
                     <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
@@ -28,10 +28,23 @@
                     </svg>
                     Support
                 </button>
-                    <!--  buttons  -->
+
+                {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="dropbtn">{{ user.email }}</button>
+                        <div class="dropdown-content">
+                            <a href="/my-orders">My Orders</a>
+                            <a href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
+                            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
                     <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
                     <button id="login-button" onclick="location.href='/login'">Log In</button>
-                </div>
+                {% endif %}
+            </div>
         </div>
     </header>
     
