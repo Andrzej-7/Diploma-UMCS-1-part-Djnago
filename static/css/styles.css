@@ -136,6 +136,13 @@ input[type="text"], .main-form-container input[type="email"], select, textarea, 
     margin-right: 10px;
 }
 
+.messages {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+
 .agreement label {
     position: relative;
     top: 3px; 
