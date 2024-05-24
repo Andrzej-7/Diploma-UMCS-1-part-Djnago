@@ -1,5 +1,3 @@
-#forms.py
-
 import django
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -23,9 +21,21 @@ class OrderForm(forms.ModelForm):
         wallet = self.cleaned_data.get('recipient_wallet')
         crypto_to = self.cleaned_data.get('crypto_to')
 
-        if wallet and crypto_to and (not wallet.startswith(crypto_to) or len(wallet) < 10 or not wallet.isalnum()):
-            raise ValidationError("Invalid wallet address.")
+        if not crypto_to:
+            crypto_to = self.data.get('crypto_to')
+
+
+        if not wallet:
+            raise ValidationError("Wallet address is required.")
+        if not crypto_to:
+            raise ValidationError("Crypto to field is required.")
+
+        if not wallet.startswith(crypto_to) or len(wallet) < 10 or not wallet.isalnum():
+            raise ValidationError("Wallet address is incorrect")
+
         return wallet
+
+
 
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
@@ -45,25 +55,15 @@ class OrderForm(forms.ModelForm):
         return cleaned_data
 
 
-    #spam domains check. ex. @spam.haha
-
-    #minimum exchange amount
-
-
-
-
 class UserRegisterForm(UserCreationForm):
     username = django.forms.CharField(widget=django.forms.TextInput(attrs={'placeholder': 'Username'}))
     email = django.forms.EmailField(widget=django.forms.EmailInput(attrs={'placeholder': 'E-mail'}))
     password1 = django.forms.CharField(widget=django.forms.PasswordInput(attrs={'placeholder': 'Password'}))
-    password2 = django.forms.CharField(
-        widget=django.forms.PasswordInput(attrs={'placeholder': 'Confirm your password'}))
+    password2 = django.forms.CharField(widget=django.forms.PasswordInput(attrs={'placeholder': 'Confirm your password'}))
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-
-
 
 
 class loginForm(django.forms.Form):
