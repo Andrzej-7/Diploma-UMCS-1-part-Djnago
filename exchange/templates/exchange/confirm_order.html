@@ -1,227 +1,108 @@
+<!-- templates/confirm_order.html -->
+{% extends 'base.html' %}
 {% load static %}
-{% block content %}
-    
-    
+
+{% block title %}Confirm Order - CryptoExchange{% endblock %}
+
+{% block extra_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles_confirm_order.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+{% endblock %}
 
-
-<body>
-    <header class="site-header">
-        <div class="Wrap">
-
-            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
-                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
-            </a>  
-            
-            <div class="wrap-buttons">
-            
-                <!--  logo for support button  -->
-                <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
-                    <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
-                        <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
-                    </svg>
-                    Support
-                </button>
-            
-                {% if user.is_authenticated %}
-                    <!-- Спадне меню -->
-                    <div class="dropdown">
-                        <button class="dropbtn">{{ user.email }}</button>
-                        <div class="dropdown-content">
-                            <a href="/my-orders">My Orders</a>
-                            <a href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
-                            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
-                                {% csrf_token %}
-                            </form>
-                            
-                        </div>
-                    </div>
-                {% else %}
-                    <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
-                    <button id="login-button" onclick="location.href='/login'">Log In</button>
-                {% endif %}
+{% block content %}
+<div class="parent-container">
+    <div class="container">
+        <h2 class="order-details-h2">Order Details</h2>
+        <div class="details">
+            <p><strong>Email:</strong> {{ order.email }}</p>
+            <div class="crypto-detail">
+                <p class="give-1"><strong>Give:</strong> {{ order.crypto_from }}</p>
+                <img src="{% static 'css/images/'|add:order.crypto_from|add:'.png' %}" alt="{{ order.crypto_from }}">
             </div>
-        </div>
-    </header>
-
-
-
-    <div class="parent-container">
-
-        
-        <!-- Order Details Container -->
-        <div class="container">
-            <h2 class="order-details-h2">Order Details</h2>
-            <div class="details">
-                <p><strong>Email:</strong> {{ order.email }}</p>
-
-                <div class="crypto-detail">
-                    <p class="give-1"><strong>Give:</strong> {{ order.crypto_from }}</p>
-                    <img src="{% static 'css/images/'|add:order.crypto_from|add:'.png' %}" alt="{{ order.crypto_from }}">
-                </div>
-
-                <p><strong>Amount:</strong> {{ order.amount }}</p>
-
-
-                <div class="crypto-detail">
-                    <p><strong>Receive:</strong> {{ order.crypto_to }}</p>
-                    <img src="{% static 'css/images/'|add:order.crypto_to|add:'.png' %}" alt="{{ order.crypto_to }}">
-                </div>
-                
-                <p><strong >Amount:</strong> {{ order.you_get }}</p>
-                <p><strong>Wallet:</strong> {{ order.recipient_wallet }}</p>
+            <p><strong>Amount:</strong> {{ order.amount }}</p>
+            <div class="crypto-detail">
+                <p><strong>Receive:</strong> {{ order.crypto_to }}</p>
+                <img src="{% static 'css/images/'|add:order.crypto_to|add:'.png' %}" alt="{{ order.crypto_to }}">
             </div>
-        
-
+            <p><strong>Amount:</strong> {{ order.you_get }}</p>
+            <p><strong>Wallet:</strong> {{ order.recipient_wallet }}</p>
         </div>
-
-
-
-
-        <div class="instruction-container">
-            
-                <h2 class="instruction-h2">Complete the exchange by following the instructions</h2>
-
-                <p class="customer-notice">Dear customer! Please note that the payment window for your order is limited. The order must be paid within 18 minutes.</p>
-
-                <p class="instruction-1"><strong>1. Make the transfer using the following details:</strong></p>
-
-                <div class = "payment-details">
-                
-                <ul>
-                    <li class="amount-1"><strong>Amount:</strong> {{ order.amount }}  {{ order.crypto_from }} </li>
-                    <li class="wallet-1"><strong>Wallet:</strong> {{ order.site_wallet|default:"No wallet provided" }}</li>
-                    <li class="purpose-1"><strong>Purpose:</strong> Personal transfer</li>
-                </ul>
-
-                </div>
-                <p class="instruction-2"><strong>2. After making the payment, please press the "I Paid" button to proceed with your order.</strong></p>
-
-                
-            
-
-
-            <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.uuid %}" method="post">
-                {% csrf_token %}
-
-                <div class="buttons-container">
-
-                    <button type="submit" id="processOrderButton">I paid</button>
-                    <a href="{% url 'cancel_order' order.uuid %}" class="cancel-button">Cancel</a>
-
-                        <div class="order-status">
-                            <div class="loader-container">
-                                <div class="loader"></div>
-                            </div>                          
-                        <div id="orderStatusMessage"></div>
-                    </div>
-
-                </div>
-
-            </form>
-            
-
-
-        </div>
-
     </div>
 
-    
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-column" id="contact-section">
-            <p class="footer-heading">Contact us:</p>
-            <div class="contact-links">
-                <a class="footer-link" href="mailto:support@cryptoexchange.com">support@cryptoexchange.com</a>
-                <a class="footer-link" href="tel:+1234567890">+1 (234) 567-890</a>
-            </div>
+    <div class="instruction-container">
+        <h2 class="instruction-h2">Complete the exchange by following the instructions</h2>
+        <p class="customer-notice">Dear customer! Please note that the payment window for your order is limited. The order must be paid within 18 minutes.</p>
+        <p class="instruction-1"><strong>1. Make the transfer using the following details:</strong></p>
+        <div class="payment-details">
+            <ul>
+                <li class="amount-1"><strong>Amount:</strong> {{ order.amount }}  {{ order.crypto_from }} </li>
+                <li class="wallet-1"><strong>Wallet:</strong> {{ order.site_wallet|default:"No wallet provided" }}</li>
+                <li class="purpose-1"><strong>Purpose:</strong> Personal transfer</li>
+            </ul>
         </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Follow us:</p>
-            <div class="social-links">
-                <a class="footer-link" href="https://facebook.com/" target="_blank">Facebook</a>
-                <a class="footer-link" href="https://linkedin.com/" target="_blank">LinkedIn</a>
+        <p class="instruction-2"><strong>2. After making the payment, please press the "I Paid" button to proceed with your order.</strong></p>
+        <form id="paymentConfirmationForm" action="{% url 'mark_as_paid' order.uuid %}" method="post">
+            {% csrf_token %}
+            <div class="buttons-container">
+                <button type="submit" id="processOrderButton">I paid</button>
+                <a href="{% url 'cancel_order' order.uuid %}" class="cancel-button">Cancel</a>
+                <div class="order-status">
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>                          
+                    <div id="orderStatusMessage"></div>
+                </div>
             </div>
-        </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Legal:</p>
-            <div class="policy-links">
-                <a class="footer-link" href="/aml">User Agreement</a>
-                <a class="footer-link" href="/aml">AML policy</a>
-            </div>
-        </div>
+        </form>
     </div>
-    
-    
-</footer>
+</div>
+{% endblock %}
 
-
-
-</body>
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{% block extra_js %}
 <script>
+    $(document).ready(function() {
+        var orderId = "{{ order.uuid }}";
+        var pollInterval;
 
-$(document).ready(function() {
-    var orderId = "{{ order.uuid }}";
-    var pollInterval;
-
-   
-    function updateUI(isProcessed, isPaid, message) {
-        if (isProcessed) {
-            $('#processOrderButton, .cancel-button, .loader-container').hide();
-            $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
-            clearInterval(pollInterval); 
-        } else if (isPaid) {
-            $('#processOrderButton, .cancel-button').hide();
-            $('.loader-container').show();
-            $('#orderStatusMessage').text(message || 'Payment confirmed. We have 15 min to process this order').show();
-        } else {
-            $('#processOrderButton, .cancel-button').show();
-            $('.loader-container').hide();
-            $('#orderStatusMessage').hide();
-        }
-    }
-
-    function checkOrderProcessed() {
-        $.ajax({
-            url: `/check_order_status/${orderId}/`,
-            success: function(response) {
-                updateUI(response.is_processed, response.is_paid, response.status_message);
-            },
-            error: function() {
-                console.log('Error while checking order status');
+        function updateUI(isProcessed, isPaid, message) {
+            if (isProcessed) {
+                $('#processOrderButton, .cancel-button, .loader-container').hide();
+                $('#orderStatusMessage').text('Your order was successfully processed! Thank you!').show();
+                clearInterval(pollInterval); 
+            } else if (isPaid) {
+                $('#processOrderButton, .cancel-button').hide();
+                $('.loader-container').show();
+                $('#orderStatusMessage').text(message || 'Payment confirmed. We have 15 min to process this order').show();
+            } else {
+                $('#processOrderButton, .cancel-button').show();
+                $('.loader-container').hide();
+                $('#orderStatusMessage').hide();
             }
-        });
-    }
+        }
 
-    
-    function pollOrderStatus() {
-        pollInterval = setInterval(checkOrderProcessed, 1000);
-    }
+        function checkOrderProcessed() {
+            $.ajax({
+                url: `/check_order_status/${orderId}/`,
+                success: function(response) {
+                    updateUI(response.is_processed, response.is_paid, response.status_message);
+                },
+                error: function() {
+                    console.log('Error while checking order status');
+                }
+            });
+        }
 
-    
-    checkOrderProcessed();
-    pollOrderStatus();
-});
+        function pollOrderStatus() {
+            pollInterval = setInterval(checkOrderProcessed, 1000);
+        }
 
-
-
+        checkOrderProcessed();
+        pollOrderStatus();
+    });
 </script>
-
 {% endblock %}

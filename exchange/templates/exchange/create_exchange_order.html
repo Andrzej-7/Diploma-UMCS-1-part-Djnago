@@ -1,211 +1,145 @@
+<!-- templates/create_order.html -->
+{% extends 'base.html' %}
 {% load static %}
-<head>
+
+{% block title %}Create Exchange Order - CryptoExchange{% endblock %}
+
+{% block extra_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
-</head>
+    
+    
+<style>
+     {#not to conflict styles #}
+    input[type="text"],
+    input[type="email"],
+    input[type="number"] {
+        padding: 12px !important;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+    select {
+        padding: 12px !important;
+        box-sizing: border-box; 
+    }
+</style>
+
+    
+{% endblock %}
 
 {% block content %}
+<div class="form-container main-form-container">
+    <form method="post" id="cryptoConverterForm">
+        {% csrf_token %}
 
-<body>
+        <div class="form-title">Create Exchange Order</div>
 
-    <header class="site-header">
-        <div class="Wrap">
-            <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
-        
-            <div class="wrap-buttons">
-                <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
-                    <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
-                        <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
-                    </svg>
-                    Support
-                </button>
-
-                {% if user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="dropbtn">{{ user.email }}</button>
-                        <div class="dropdown-content">
-                            <a href="/my-orders">My Orders</a>
-                            <a href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
-                            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
-                                {% csrf_token %}
-                            </form>
-                        </div>
-                    </div>
-                {% else %}
-                    <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
-                    <button id="login-button" onclick="location.href='/login'">Log In</button>
-                {% endif %}
-            </div>
+        <div class="form-field">
+            <label for="id_email">E-mail:</label>
+            <input type="email" name="email" id="id_email" required>
         </div>
-    </header>
 
-    <div class="form-container main-form-container">
-        <form method="post" id="cryptoConverterForm">
-            {% csrf_token %}
+        <div class="form-field">
+            <label for="id_crypto_from">Crypto From:</label>
+            <select name="crypto_from" id="id_crypto_from">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="XMR">Monero (XMR)</option>
+                <option value="DAI">Dai (DAI)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="LTC">Litecoin (LTC)</option>
+                <option value="XLM">Stellar (XLM)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="XRP">Ripple (XRP)</option>
+            </select>
+        </div>
 
-            <div class="form-title">Create Exchange Order</div>
+        <div class="form-field">
+            <label for="id_amount">Amount:</label>
+            <input type="number" name="amount" id="id_amount">
+        </div>
 
-            <div class="form-field">
-                <label for="id_email">E-mail:</label>
-                <input type="email" name="email" id="id_email" required>
-            </div>
+        <div class="form-field">
+            <label for="id_crypto_to">Crypto To:</label>
+            <select name="crypto_to" id="id_crypto_to">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="XMR">Monero (XMR)</option>
+                <option value="DAI">Dai (DAI)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="LTC">Litecoin (LTC)</option>
+                <option value="XLM">Stellar (XLM)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="XRP">Ripple (XRP)</option>
+            </select>
+        </div>
 
-            <div class="form-field">
-                <label for="id_crypto_from">Crypto From:</label>
-                <select name="crypto_from" id="id_crypto_from">
-                    <option value="BTC">Bitcoin (BTC)</option>
-                    <option value="ETH">Ethereum (ETH)</option>
-                    <option value="XMR">Monero (XMR)</option>
-                    <option value="DAI">Dai (DAI)</option>
-                    <option value="BNB">Binance Coin (BNB)</option>
-                    <option value="USDT">Tether (USDT)</option>
-                    <option value="LTC">Litecoin (LTC)</option>
-                    <option value="XLM">Stellar (XLM)</option>
-                    <option value="ADA">Cardano (ADA)</option>
-                    <option value="XRP">Ripple (XRP)</option>
-                    <!-- інші криптовалюти -->
-                </select>
-            </div>
+        <div class="form-field">
+            <label for="id_recipient_wallet">Recipient Wallet:</label>
+            <input type="text" name="recipient_wallet" id="id_recipient_wallet">
+        </div>
 
-            <div class="form-field">
-                <label for="id_amount">Amount:</label>
-                <input type="number" name="amount" id="id_amount">
-            </div>
+        <div class="form-field">
+            <label for="you_get">You receive:</label>
+            <input type="text" name="converted_amount" id="converted_amount" readonly>
+        </div>
 
-            <div class="form-field">
-                <label for="id_crypto_to">Crypto To:</label>
-                <select name="crypto_to" id="id_crypto_to">
-                    <option value="BTC">Bitcoin (BTC)</option>
-                    <option value="ETH">Ethereum (ETH)</option>
-                    <option value="XMR">Monero (XMR)</option>
-                    <option value="DAI">Dai (DAI)</option>
-                    <option value="BNB">Binance Coin (BNB)</option>
-                    <option value="USDT">Tether (USDT)</option>
-                    <option value="LTC">Litecoin (LTC)</option>
-                    <option value="XLM">Stellar (XLM)</option>
-                    <option value="ADA">Cardano (ADA)</option>
-                    <option value="XRP">Ripple (XRP)</option>
-                    <!-- інші криптовалюти -->
-                </select>
-            </div>
+        <div class="form-field agreement">
+            <input type="checkbox" id="agreementCheckbox" class="agreement-checkbox" name="agreement">
+            <label for="agreementCheckbox">Agree to <a href="/aml/" class="user-agreement-link">user agreement</a> service.</label>
+        </div>
 
-            <div class="form-field">
-                <label for="id_recipient_wallet">Recipient Wallet:</label>
-                <input type="text" name="recipient_wallet" id="id_recipient_wallet">
-            </div>
-
-            <div class="form-field">
-                <label for="you_get">You receive:</label>
-                <input type="text" name="converted_amount" id="converted_amount" readonly>
-            </div>
-
-            <div class="form-field agreement">
-                <input type="checkbox" id="agreementCheckbox" class="agreement-checkbox" name="agreement">
-                
-                <label for="agreementCheckbox">Agree to <a href="/aml/" class="user-agreement-link">user agreement</a> service.</label>
-            
-            </div>
-        
-
-        
-        
-            <div id="formErrors" style="color: red; font-size: 0.8em;">
-                {% if form.non_field_errors %}
-                    {{ form.non_field_errors }}
-                {% endif %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div>{{ field.label }}: {{ error }}</div>
-                    {% endfor %}
+        <div id="formErrors" style="color: red; font-size: 0.8em;">
+            {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+            {% endif %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div>{{ field.label }}: {{ error }}</div>
                 {% endfor %}
-            </div>
-
-        
-        
-            <div class="form-field button-container">
-                <button type="submit" id="submitBtn">Exchange now</button>
-            </div>
-        </form>
-    </div>
-
-    
-  
-    
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-column" id="contact-section">
-            <p class="footer-heading">Contact us:</p>
-            <div class="contact-links">
-                <a class="footer-link" href="mailto:support@cryptoexchange.com">support@cryptoexchange.com</a>
-                <a class="footer-link" href="tel:+1234567890">+1 (234) 567-890</a>
-            </div>
+            {% endfor %}
         </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Follow us:</p>
-            <div class="social-links">
-                <a class="footer-link" href="https://facebook.com/" target="_blank">Facebook</a>
-                <a class="footer-link" href="https://linkedin.com/" target="_blank">LinkedIn</a>
-            </div>
+
+        <div class="form-field button-container">
+            <button type="submit" id="submitBtn">Exchange now</button>
         </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Legal:</p>
-            <div class="policy-links">
-                <a class="footer-link" href="/aml">User Agreement</a>
-                <a class="footer-link" href="/aml">AML policy</a>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-    
-</footer>
+    </form>
+</div>
+{% endblock %}
 
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateConversion() {
+            var amount = document.querySelector('input[name="amount"]').value;
+            if (!amount) return; //if no amount is entered
 
+            var from_currency = document.querySelector('select[name="crypto_from"]').value;
+            var to_currency = document.querySelector('select[name="crypto_to"]').value;
 
-
-
-
-
-    
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateConversion() {
-                var amount = document.querySelector('input[name="amount"]').value;
-                if (!amount) return; //if no amount is entered
-
-                var from_currency = document.querySelector('select[name="crypto_from"]').value;
-                var to_currency = document.querySelector('select[name="crypto_to"]').value;
-
-                fetch(`/convert_currency/?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('converted_amount').value = data.converted_amount.toFixed(4);
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        
-            document.getElementById('id_amount').addEventListener('input', updateConversion);
-            document.getElementById('id_crypto_from').addEventListener('input', updateConversion);
-            document.getElementById('id_crypto_to').addEventListener('input', updateConversion);
-        });
-
-        document.getElementById("id_amount").addEventListener("input", function() {
-            const amount = parseFloat(this.value);
-            if (amount < 0 || isNaN(amount)) {
-                this.value = ''; //clear field 
-            }
-        });
-
-        function logout() {
-            document.getElementById('logout-form').submit();
+            fetch(`/convert_currency/?amount=${amount}&from_currency=${from_currency}&to_currency=${to_currency}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('converted_amount').value = data.converted_amount.toFixed(4);
+            })
+            .catch(error => console.error('Error:', error));
         }
-    </script>
-</body>
+
+        document.getElementById('id_amount').addEventListener('input', updateConversion);
+        document.getElementById('id_crypto_from').addEventListener('input', updateConversion);
+        document.getElementById('id_crypto_to').addEventListener('input', updateConversion);
+    });
+
+    document.getElementById("id_amount").addEventListener("input", function() {
+        const amount = parseFloat(this.value);
+        if (amount < 0 || isNaN(amount)) {
+            this.value = ''; //clear field
+        }
+    });
+
+    function logout() {
+        document.getElementById('logout-form').submit();
+    }
+</script>
 {% endblock %}

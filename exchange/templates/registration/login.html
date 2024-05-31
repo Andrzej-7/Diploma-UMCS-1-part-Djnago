@@ -1,125 +1,43 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<head>
-    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&display=swap" rel="stylesheet">
-    
-</head>
+
+{% block title %}Login - CryptoExchange{% endblock %}
+
 
 {% block content %}
-
-<body>
-
-    <header class="site-header">
-        <div class="Wrap">
-            <a href="{% url 'create_exchange_order' %}" class="site-title-link">
-                <p class="site-title"><span class="site-color">Crypto</span>Exchange</p>
-            </a>            
-                <div class="wrap-buttons">
-                    <!--  logo for support button  -->
-                <button id="support-button" onclick="document.getElementById('contact-section').scrollIntoView({ behavior: 'smooth' });">
-                    <svg class="support-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M7.824 5.937a1 1 0 0 0 .726-.312 2.042 2.042 0 0 1 2.835-.065 1 1 0 0 0 1.388-1.441 3.994 3.994 0 0 0-5.674.13 1 1 0 0 0 .725 1.688Z"/>
-                        <path d="M17 7A7 7 0 1 0 3 7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V7a5 5 0 1 1 10 0v7.083A2.92 2.92 0 0 1 12.083 17H12 a2 2 0 0 0-2-2H9 a2 2 0 0 0-2 2v1 a2 2 0 0 0 2 2 h1 a1.993 1.993 0 0 0 1.722-1 h.361 a4.92 4.92 0 0 0 4.824-4 H17 a3 3 0 0 0 3-3 v-2 a3 3 0 0 0-3-3 Z"/>
-                    </svg>
-                    Support
-                </button>
-                    <!--  buttons  -->
-                    <button id="signup-button" onclick="location.href='/register'">Sign Up</button>
-                    <button id="login-button" onclick="location.href='/login'">Log In</button>
-                </div>
+<div class="login-form-container">
+    <div class="site-header-login">
+        <div class="left-header">
+            <div class="register-form-title">Login</div>
         </div>
-    </header>
-    
-
-
-    <div class="login-form-container">
-        <div class="site-header-login">
-            <div class="left-header">
-                <div class="register-form-title">Login</div>
-            </div>
-            <div class="right-header">
-                <button id="login-button-register" onclick="location.href='/register';">Sign up</button>
-
-            </div>
+        <div class="right-header">
+            <button id="login-button-register" onclick="location.href='{% url 'register' %}';">Sign up</button>
         </div>
-        
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="form-field">
-                {{ form.username.errors }}
-                {{ form.username }}
-            </div>
-
-
-            <div class="form-field">
-                {{ form.password.errors }}
-                {{ form.password }}
-            </div>
-
-            <div class="register-button-container">
-                <button type="submit" class="register-button">Login</button>
-            </div>
-
-            {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    {% if 'login' in message.tags %}
-                        <div class="{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-field">
+            {{ form.username.errors }}
+            {{ form.username }}
+        </div>
+        <div class="form-field">
+            {{ form.password.errors }}
+            {{ form.password }}
+        </div>
+        <div class="register-button-container">
+            <button type="submit" class="register-button">Login</button>
+        </div>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {% if 'login' in message.tags %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
         {% endif %}
-        
-        
-
-        </form>
-    
-    
-    {#    footer#}
-    </div>
-
-
-
-<footer class="footer-login">
-    <div class="footer-container">
-        <div class="footer-column" id="contact-section">
-            <p class="footer-heading">Contact us:</p>
-            <div class="contact-links">
-                <a class="footer-link" href="mailto:support@cryptoexchange.com">support@cryptoexchange.com</a>
-                <a class="footer-link" href="tel:+1234567890">+1 (234) 567-890</a>
-            </div>
-        </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Follow us:</p>
-            <div class="social-links">
-                <a class="footer-link" href="https://facebook.com/" target="_blank">Facebook</a>
-                <a class="footer-link" href="https://linkedin.com/" target="_blank">LinkedIn</a>
-            </div>
-        </div>
-        
-        <div class="footer-column">
-            <p class="footer-heading">Legal:</p>
-            <div class="policy-links">
-                <a class="footer-link" href="/aml">User Agreement</a>
-                <a class="footer-link" href="/aml">AML policy</a>
-            </div>
-        </div>
-    </div>
-    
-    
-</footer>
-    
-    
-
-
-</body>
+    </form>
+</div>
 {% endblock %}
