@@ -1,35 +1,15 @@
-# models.py
-
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-ETH = "ETH"
-XMR = "XMR"
-DAI = "DAI"
-DASH = "DASH"
-Dogecoin = "Dogecoin"
-Bitcoin = "BTC"
-USDT = "USDT"
-BNB = "BNB"
-LTC = "LTC"
-XLM = "XLM"
-ADA = "ADA"
-XRP = "XRP"
 
-cryptoChoises = ((ETH, "eth"),
-                 (XMR, "xmr"),
-                 (DAI, "dai"),
-                 (DASH, "dash"),
-                 (Dogecoin, "dogecoin"),
-                 (Bitcoin, "bitcoin"),
+cryptoChoises = (
 
-                 (LTC, "LTC"),
-                 (XLM, "stellar"),
-                 (ADA, "cardano"),
-                 (BNB, "BNB"),
-                 (XRP, "XRP"),
-                 (USDT, "usdt"))
+    ("ETH", "eth"), ("XMR", "xmr"), ("DAI", "dai"), ("DASH", "dash"), ("Dogecoin", "dogecoin"),
+    ("BTC", "bitcoin"), ("USDT", "usdt"), ("BNB", "BNB"), ("LTC", "LTC"), ("XLM", "stellar"),
+    ("ADA", "cardano"), ("XRP", "XRP")
+
+)
 
 
 class Order(models.Model):
@@ -46,14 +26,11 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 
-class User(models.Model):
+class user(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=255)
 
 
-class CryptoCurrency(models.Model):
-    name = models.CharField(max_length=100)
-    symbol = models.CharField(max_length=10)
 
     def __str__(self):
         return f'Order {self.id}'

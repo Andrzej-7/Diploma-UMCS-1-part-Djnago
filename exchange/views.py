@@ -1,40 +1,28 @@
 # views.py
+
 from django.contrib import messages
 import requests
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.shortcuts import redirect, render
-from .forms import OrderForm
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from .models import Order
-from django.http import HttpResponse
 from .forms import UserRegisterForm, OrderForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from .forms import loginForm
-from django.contrib.auth.models import User
-from decimal import Decimal
 
-api_key = '39a10038-46ef-40df-840f-87a402232775'
+api = '39a10038-46ef-40df-840f-87a402232775'
 
 wallets = {
 
-    'ETH': 'ETH3bf69a829c08f1ee28b0c013c937209a',
-    'XMR': 'XMR1ddb778e2b24b6e065a112080869c5f3',
-    'BTC': 'BTCmbHfnpaZjKFvyi1okTjJJusN455paPH',
-    'DAI': 'DAIA385E6A13f935665B3b44897Dd12E4018f5903C',
-
-    'BNB': 'BNB82917412Ab41D614509a44652933204d4aea7Cb',
-    'USDT': 'USDTfJyNxCws7gsjDRdJmVqovy4zuQsR9w',
-    'LTC': 'LTCtpGGzSCfR7V6WRmL168BNwGvDi2joRm',
-    'XLM': 'XLMfQIK63R2NETJM7T673EAMZN4RJLLGP3',
-    'ADA': 'ADA2N1FfmbHfnpaZmVqovyEAMZNpaZjK',
-    'XRP': 'XRP13f93NETJM7T6Ab41D614509a446VqovyEAM'
+    'ETH': 'ETH3bf69a829c08f1ee28b0c013c937209a', 'XMR': 'XMR1ddb778e2b24b6e065a112080869c5f3',
+    'BTC': 'BTCmbHfnpaZjKFvyi1okTjJJusN455paPH', 'DAI': 'DAIA385E6A13f935665B3b44897Dd12E4018f5903C',
+    'BNB': 'BNB82917412Ab41D614509a44652933204d4aea7Cb', 'USDT': 'USDTfJyNxCws7gsjDRdJmVqovy4zuQsR9w',
+    'LTC': 'LTCtpGGzSCfR7V6WRmL168BNwGvDi2joRm', 'XLM': 'XLMfQIK63R2NETJM7T673EAMZN4RJLLGP3',
+    'ADA': 'ADA2N1FfmbHfnpaZmVqovyEAMZNpaZjK', 'XRP': 'XRP13f93NETJM7T6Ab41D614509a446VqovyEAM'
 
 }
 
-
-def home(request):
-    return render(request, 'exchange/home.html')
 
 
 def create_order(request):
@@ -48,7 +36,7 @@ def create_order(request):
             crypto_from = form.cleaned_data['crypto_from']
             order.site_wallet = wallets.get(crypto_from, 'No wallet provided')
             order.you_get = convert_crypto(form.cleaned_data['amount'], form.cleaned_data['crypto_from'],
-                                           form.cleaned_data['crypto_to'], api_key)
+                                           form.cleaned_data['crypto_to'], api)
 
             order.save()
             return redirect('confirm_order', uuid=order.uuid)
@@ -83,7 +71,7 @@ def mark_order_as_paid(request, uuid):
         order.is_paid = True
         order.save()
         request.session['order_status'] = 'Payment confirmed. We have 15 min to process this order'
-        return redirect('confirm_order', uuid=order.uuid)  # Redirect to the confirmation page
+        return redirect('confirm_order', uuid=order.uuid)
     return JsonResponse({'message': 'Invalid request method'}, status=405)
 
 
@@ -103,10 +91,10 @@ def cancel_order(request, uuid):
     return redirect('create_exchange_order')
 
 
-def get_conversion_rate(from_currency, to_currency, api_key):
+def get_conversion_rate(from_currency, to_currency, api):
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
     headers = {
-        'X-CMC_PRO_API_KEY': api_key,
+        'X-CMC_PRO_API_KEY': api,
         'Accepts': 'application/json'
     }
     parameters = {
@@ -125,14 +113,10 @@ def get_conversion_rate(from_currency, to_currency, api_key):
         raise ValueError("API response is missing 'data' or currency information.")
 
 
-
-
-
-def convert_crypto(amount, from_currency, to_currency, api_key):
-    rate = get_conversion_rate(from_currency, to_currency, api_key)
+def convert_crypto(amount, from_currency, to_currency, api):
+    rate = get_conversion_rate(from_currency, to_currency, api)
     converted_amount = float(amount) * float(rate)
     return converted_amount
-
 
 
 def convert_currency(request):
@@ -144,7 +128,7 @@ def convert_currency(request):
     from_currency = request.GET.get('from_currency', 'BTC')
     to_currency = request.GET.get('to_currency', 'BTC')
 
-    converted_amount = convert_crypto(amount, from_currency, to_currency, api_key)
+    converted_amount = convert_crypto(amount, from_currency, to_currency, api)
     return JsonResponse({'converted_amount': converted_amount})
 
 
@@ -174,7 +158,6 @@ def custom_register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
-
 def custom_login(request):
     if request.method == 'POST':
         form = loginForm(request.POST)
@@ -187,7 +170,6 @@ def custom_login(request):
                 login(request, user)
                 return redirect('create_exchange_order')
             else:
-                # Використовуємо тег 'login' для помилок входу
                 messages.error(request, "Invalid username or password.", extra_tags='login')
 
         else:
@@ -201,6 +183,7 @@ def custom_login(request):
 
 def aml_policy(request):
     return render(request, 'agreements/aml.html')
+
 
 def user_agreement(request):
     return render(request, 'agreements/aml.html')
