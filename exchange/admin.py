@@ -6,6 +6,7 @@ from django.urls import reverse
 from .models import Order
 from django.utils.html import format_html
 from django.shortcuts import get_object_or_404
+from django.urls import path
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -18,7 +19,6 @@ class OrderAdmin(admin.ModelAdmin):
     process_order_link.short_description = 'Process Order'
 
     def get_urls(self):
-        from django.urls import path
 
         urls = super().get_urls()
         custom_urls = [
@@ -27,6 +27,7 @@ class OrderAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def process_order(self, request, object_id):
+
         order = get_object_or_404(Order, pk=object_id)
         order.is_processed = True
         order.save()

@@ -29,7 +29,7 @@
                     <div class="dropdown">
                         <button class="dropbtn">{{ user.email }}</button>
                         <div class="dropdown-content">
-                            <a href="/my-orders">My Orders</a>
+{#                            <a href="/my-orders">My Orders</a>#}
                             <a href="#" onclick="document.getElementById('logout-form').submit();">Log Out</a>
                             <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                                 {% csrf_token %}

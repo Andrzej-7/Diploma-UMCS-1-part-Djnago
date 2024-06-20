@@ -93,14 +93,18 @@ def cancel_order(request, uuid):
 
 def get_conversion_rate(from_currency, to_currency, api):
     url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest"
+
     headers = {
         'X-CMC_PRO_API_KEY': api,
         'Accepts': 'application/json'
     }
+
+
     parameters = {
         'symbol': ','.join([from_currency, to_currency]),
         'convert': 'USD'
     }
+
     response = requests.get(url, headers=headers, params=parameters)
     data = response.json()
 
