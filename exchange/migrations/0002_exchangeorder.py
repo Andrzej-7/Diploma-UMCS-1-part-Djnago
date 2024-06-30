@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('wallet_address', models.CharField(max_length=100)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('cryptocurrency_type', models.CharField(max_length=20)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('User', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

@@ -26,7 +26,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 
-class user(models.Model):
+class User(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=255)
 

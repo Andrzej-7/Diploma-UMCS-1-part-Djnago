@@ -31,7 +31,7 @@ def create_order(request):
         if form.is_valid():
             order = form.save(commit=False)
             if request.user.is_authenticated:
-                order.user = request.user
+                order.User = request.user
 
             crypto_from = form.cleaned_data['crypto_from']
             order.site_wallet = wallets.get(crypto_from, 'No wallet provided')

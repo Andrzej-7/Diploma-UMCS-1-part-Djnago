@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='exchangeorder',
-            name='user',
+            name='User',
         ),
         migrations.RemoveField(
             model_name='exchangeorder',

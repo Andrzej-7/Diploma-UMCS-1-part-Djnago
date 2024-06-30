@@ -10,7 +10,7 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
-    agreement = forms.BooleanField(required=True, error_messages={'required': "Confirm user agreement."})
+    agreement = forms.BooleanField(required=True, error_messages={'required': "Confirm User agreement."})
 
     class Meta:
         model = Order
